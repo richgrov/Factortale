@@ -1,0 +1,47 @@
+/*
+    THIS FONT WAS NOT MADE BY ME!
+    Credit: https://gitlab.com/cartr/undertale-fonts/-/tree/master/webfonts
+*/
+@font-face {
+  font-family: 'Determination Mono';
+  font-weight: normal;
+  font-style: normal;
+  src: url('font/determination-mono.eot');
+  src:
+    url('font/determination-mono.eot?#iefix') format('embedded-opentype'),
+    url('font/determination-mono.woff2') format('woff2'),
+    url('font/determination-mono.woff') format('woff'),
+    url('font/determination-mono.ttf') format('truetype'),
+    url('font/determination-mono.svg#determination_mono_webregular') format('svg');
+
+}
+
+body {
+    margin: 0;
+    background-color: black;
+    color: white;
+    font-family: 'Determination Mono', monospace; /* TODO Consider fallback fonts */
+    font-size: 50px;
+    overflow: hidden;
+}
+
+h1, h2, h3 {
+    font-weight: normal;
+}
+
+noscript {
+    text-align: center;
+}
+
+#no-canvas {
+    text-align: center;
+    display: none;
+}
+
+#frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
