@@ -5,9 +5,13 @@ class BattleState {
 }
 
 const ready = () => {
+  let step = 'FIND_FACTORS';
+
   let answerCorrect = false;
 
-  const box = new Box('* Expression blocks the way!');
+  const box = new Box();
+  box.setText('Expression blocks the way!');
+
   const equation = new Equation(6, -16);
   const arena = new Arena(() => {
     findFactorMenu.end = false;
@@ -58,7 +62,11 @@ const ready = () => {
   });
 
   ButtonManager.makeButton(183, textures.button.help, textures.button.helpSel, () => {
-
+    switch (step) {
+      case 'FIND_FACTORS':
+        box.setText('Find the factors of ' + equation.c + ' which\nadd up to equal ' + equation.b);
+        break;
+    }
   });
 
   ButtonManager.makeButton(346, textures.button.item, textures.button.itemSel, () => {

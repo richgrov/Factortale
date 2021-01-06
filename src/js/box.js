@@ -4,9 +4,9 @@ class Box {
   static TEXT_X = 40;
   static TEXT_Y = 250;
 
-  constructor(initialText) {
-    this.textGoal = initialText;
-    this.textRender = '';
+  constructor() {
+    this.textRender = [];
+    this.textGoal = [''];
 
     this.done = true;
 
@@ -15,7 +15,8 @@ class Box {
   }
 
   setText(text) {
-    this.textGoal = text;
+    this.textGoal = ('* ' + text).split('\n');
+    this.textRender = Array(this.textGoal.length).fill('');
   }
 
   grow(callback) {
@@ -48,12 +49,16 @@ class Box {
 
     // Typewriter
     if (BattleState.get() === BattleState.INFO || BattleState.get() === BattleState.CHOOSE) {
-      if (this.textGoal.length - this.textRender.length > 0) {
-        sounds.type.menu.cloneNode(true).play();
-        this.textRender += this.textGoal[this.textRender.length];
+      for (let i = 0; i < this.textGoal.length; i++) {
+        const text = this.textGoal[i];
+        if (text.length - this.textRender[i].length > 0) {
+          sounds.type.menu.cloneNode(true).play();
+          this.textRender[i] += text[this.textRender[i].length];
+          break;
+        }
       }
     } else {
-      this.textRender = '';
+      this.textRender = Array(this.textGoal.length).fill('');
     }
 
     if (!this.done) {
@@ -66,7 +71,10 @@ class Box {
     if (BattleState.get() === BattleState.INFO || BattleState.get() === BattleState.CHOOSE) {
       ctx.textAlign = 'left';
       ctx.font = '30px Determination Mono';
-      ctx.fillText(this.textRender, Box.TEXT_X, Box.TEXT_Y);
+
+      this.textRender.forEach((text, i) => {
+        ctx.fillText(text, Box.TEXT_X, Box.TEXT_Y + (i * 40));
+      });
     }
 
     ctx.strokeStyle = 'white';
