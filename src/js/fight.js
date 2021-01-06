@@ -12,9 +12,11 @@ const ready = () => {
 
   const box = new Box();
   const equation = new Equation(6, -16);
+  const arena = new Arena();
   const attack = new Attack(equation, () => {
     state = BattleState.BATTLE;
     box.resize(120);
+    Button.selected = -1;
   });
 
   BattleState.INFO = new BattleState(0, () => {
@@ -190,13 +192,19 @@ const ready = () => {
       }
     },
     tick: () => {
-      // Typewriter
-      if (state === BattleState.INFO || state === BattleState.CHOOSE) {
-        // Check to see if there are letters left
-        if (textGoal.length - textRender.length > 0) {
-          sounds.type.menu.cloneNode(true).play();
-          textRender += textGoal[textRender.length];
-        }
+      switch (state) {
+        case BattleState.INFO:
+        case BattleState.CHOOSE:
+          // Check to see if there are letters left
+          if (textGoal.length - textRender.length > 0) {
+            sounds.type.menu.cloneNode(true).play();
+            textRender += textGoal[textRender.length];
+          }
+          break;
+
+        case BattleState.BATTLE:
+          arena.update();
+          break;
       }
 
       box.update();
@@ -225,6 +233,10 @@ const ready = () => {
         case BattleState.MENU:
         case BattleState.ATTACK:
           currentMenu.render();
+          break;
+
+        case BattleState.BATTLE:
+          arena.render();
           break;
       }
     },

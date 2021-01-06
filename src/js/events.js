@@ -7,6 +7,11 @@ const Action = {
   DOWN: 5
 };
 
+let leftHold = false;
+let rightHold = false;
+let upHold = false;
+let downHold = false;
+
 const initEvents = () => {
   document.onkeydown = (ev) => {
     switch (ev.key) {
@@ -21,20 +26,44 @@ const initEvents = () => {
         break;
 
       case 'ArrowLeft':
+        leftHold = true;
         currentFrame.action(Action.LEFT);
         break;
 
       case 'ArrowRight':
+        rightHold = true;
         currentFrame.action(Action.RIGHT);
         break;
 
       case 'ArrowUp':
+        upHold = true;
         currentFrame.action(Action.UP);
         break;
 
       case 'ArrowDown':
+        downHold = true;
         currentFrame.action(Action.DOWN);
         break;
     }
   };
+
+  document.onkeyup = (e) => {
+    switch (e.key) {
+      case 'ArrowLeft':
+        leftHold = false;
+        break;
+
+      case 'ArrowRight':
+        rightHold = false;
+        break;
+
+      case 'ArrowUp':
+        upHold = false;
+        break;
+
+      case 'ArrowDown':
+        downHold = false;
+        break;
+    }
+  }
 };
