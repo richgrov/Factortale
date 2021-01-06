@@ -15,7 +15,7 @@ const ready = () => {
   const box = new Box();
   const equation = new Equation(6, -16);
   const arena = new Arena(() => {
-    Button.enabled = true;
+    ButtonManager.setActive(true);
     findFactorMenu.end = false;
 
     box.resize(600, () => {
@@ -28,7 +28,7 @@ const ready = () => {
     box.resize(120, () => {
       arena.sendAttack(true);
     });
-    Button.enabled = false;
+    ButtonManager.setActive(true);
   });
 
   BattleState.INFO = new BattleState(0, () => {
@@ -56,19 +56,19 @@ const ready = () => {
   let state = BattleState.CHOOSE;
   state.callback();
 
-  new Button(20, textures.button.solve, textures.button.solveSel, () => {
+  ButtonManager.makeButton(20, textures.button.solve, textures.button.solveSel, () => {
     currentMenu = solveMenu;
   });
 
-  new Button(183, textures.button.help, textures.button.helpSel, () => {
+  ButtonManager.makeButton(183, textures.button.help, textures.button.helpSel, () => {
 
   });
 
-  new Button(346, textures.button.item, textures.button.itemSel, () => {
+  ButtonManager.makeButton(346, textures.button.item, textures.button.itemSel, () => {
 
   });
 
-  new Button(510, textures.button.done, textures.button.doneSel, () => {
+  ButtonManager.makeButton(510, textures.button.done, textures.button.doneSel, () => {
 
   });
 
@@ -128,7 +128,7 @@ const ready = () => {
         case Action.CONFIRM:
           switch (state) {
             case BattleState.CHOOSE:
-              Button.choose();
+              ButtonManager.confirm();
               state = BattleState.MENU;
               textGoal = '';
               textRender = '';
@@ -154,10 +154,10 @@ const ready = () => {
         case Action.LEFT:
           switch (state) {
             case BattleState.CHOOSE:
-              if (Button.selected === 0) {
-                Button.selected = 3;
+              if (ButtonManager.selected === 0) {
+                ButtonManager.selected = 3;
               } else {
-                Button.selected--;
+                ButtonManager.selected--;
               }
               break;
 
@@ -170,10 +170,10 @@ const ready = () => {
         case Action.RIGHT:
           switch (state) {
             case BattleState.CHOOSE:
-              if (Button.selected === 3) {
-                Button.selected = 0;
+              if (ButtonManager.selected === 3) {
+                ButtonManager.selected = 0;
               } else {
-                Button.selected++;
+                ButtonManager.selected++;
               }
               break;
 
@@ -221,7 +221,7 @@ const ready = () => {
       equation.update();
     },
     render: () => {
-      Button.renderAll(state === BattleState.CHOOSE);
+      ButtonManager.render(state === BattleState.CHOOSE);
 
       ctx.fillStyle = 'white';
       ctx.textBaseline = 'top';
