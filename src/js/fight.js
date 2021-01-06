@@ -187,13 +187,13 @@ const ready = () => {
       ctx.strokeRect((WIDTH - boxWidth) / 2, 240, boxWidth, 120);
 
       ctx.fillStyle = 'white';
+      ctx.textBaseline = 'top';
 
       equation.draw();
 
       switch (state) {
         case BattleState.CHOOSE:
           // Draw typewriter
-          ctx.textBaseline = 'top';
           ctx.textAlign = 'left';
           ctx.font = '30px Determination Mono';
           ctx.fillText(textRender, textX, textY);
