@@ -10,13 +10,25 @@ const ready = () => {
   let textGoal = '';
   let textRender = '';
 
+  let answerCorrect = false;
+
   const box = new Box();
   const equation = new Equation(6, -16);
-  const arena = new Arena();
+  const arena = new Arena(() => {
+    Button.enabled = true;
+    findFactorMenu.end = false;
+
+    box.resize(600, () => {
+      state = BattleState.CHOOSE;
+    });
+  });
+
   const attack = new Attack(equation, () => {
     state = BattleState.BATTLE;
-    box.resize(120);
-    Button.selected = -1;
+    box.resize(120, () => {
+      arena.sendAttack(true);
+    });
+    Button.enabled = false;
   });
 
   BattleState.INFO = new BattleState(0, () => {
@@ -27,14 +39,12 @@ const ready = () => {
     textGoal = '* Expression blocks the way!';
   });
 
-  BattleState.MENU = new BattleState(2, () => {
-    // menu items
-  });
+  BattleState.MENU = new BattleState(2);
 
-  BattleState.ATTACK = new BattleState(3, (correct) => {
+  BattleState.ATTACK = new BattleState(3, () => {
     currentMenu.end = true;
 
-    if (correct) {
+    if (answerCorrect) {
       attack.run(Math.floor(Math.random() * (textures.damage.length - 1)) + 1);
     } else {
       attack.run(0);
@@ -46,13 +56,21 @@ const ready = () => {
   let state = BattleState.CHOOSE;
   state.callback();
 
-  const buttons = [
-    new Button(20, 0, textures.button.solve, textures.button.solveSel),
-    new Button(183, 1, textures.button.help, textures.button.helpSel),
-    new Button(346, 2, textures.button.item, textures.button.itemSel),
-    new Button(510, 3, textures.button.done, textures.button.doneSel)
-  ];
+  new Button(20, textures.button.solve, textures.button.solveSel, () => {
+    currentMenu = solveMenu;
+  });
 
+  new Button(183, textures.button.help, textures.button.helpSel, () => {
+
+  });
+
+  new Button(346, textures.button.item, textures.button.itemSel, () => {
+
+  });
+
+  new Button(510, textures.button.done, textures.button.doneSel, () => {
+
+  });
 
   const factors = [];
   for (let i = 0; i <= Math.abs(equation.c); i++) {
@@ -72,22 +90,14 @@ const ready = () => {
 
     secondFactor = parseInt(secondFactor);
 
-    let callback;
-    if (firstFactor + secondFactor === parseInt(equation.b)) {
-      callback = () => {
-        state = BattleState.ATTACK;
-        state.callback(true);
-      }
-    } else {
-      callback = () => {
-        state = BattleState.ATTACK;
-        state.callback(false);
-      }
-    }
+    answerCorrect = firstFactor + secondFactor === parseInt(equation.b);
 
     factorMenuItems.push({
       name: factor + ' & ' + secondFactor,
-      callback: callback
+      callback: () => {
+        state = BattleState.ATTACK;
+        state.callback();
+      }
     });
   });
 
@@ -118,11 +128,10 @@ const ready = () => {
         case Action.CONFIRM:
           switch (state) {
             case BattleState.CHOOSE:
+              Button.choose();
               state = BattleState.MENU;
               textGoal = '';
               textRender = '';
-
-              state.callback();
               break;
 
             case BattleState.MENU:
@@ -212,8 +221,7 @@ const ready = () => {
       equation.update();
     },
     render: () => {
-      // Draw all buttons
-      buttons.forEach(button => button.render(state === BattleState.CHOOSE));
+      Button.renderAll(state === BattleState.CHOOSE);
 
       ctx.fillStyle = 'white';
       ctx.textBaseline = 'top';

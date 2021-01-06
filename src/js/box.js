@@ -2,12 +2,17 @@ class Box {
   static INCREMENT = 30;
 
   constructor() {
+    this.done = true;
+
     this.renderWidth = 600;
     this.goalWidth = 600;
   }
 
-  resize(value) {
+  resize(value, callback) {
+    this.callback = callback;
+
     this.goalWidth = value;
+    this.done = false;
   }
 
   update() {
@@ -23,6 +28,11 @@ class Box {
       } else {
         this.renderWidth -= Box.INCREMENT;
       }
+    }
+
+    if (!this.done) {
+      this.done = true;
+      this.callback();
     }
   }
 
