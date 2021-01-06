@@ -7,8 +7,6 @@ class BattleState {
 const ready = () => {
   let step = 'FIND_FACTORS';
 
-  let answerCorrect = false;
-
   const box = new Box();
   box.setText('Expression blocks the way!');
 
@@ -38,15 +36,7 @@ const ready = () => {
   BattleState.MENU = new BattleState(2);
 
   // When the attack and damage animation is being played
-  BattleState.ATTACK = new BattleState(3, () => {
-    currentMenu.end = true;
-
-    if (answerCorrect) {
-      attack.run(Math.floor(Math.random() * (textures.damage.length - 1)) + 1);
-    } else {
-      attack.run(0);
-    }
-  });
+  BattleState.ATTACK = new BattleState(3);
 
   // When the player can move around the arena
   BattleState.BATTLE = new BattleState(4);
@@ -58,13 +48,39 @@ const ready = () => {
   };
 
   ButtonManager.makeButton(20, textures.button.solve, textures.button.solveSel, () => {
-    currentMenu = solveMenu;
+    state = BattleState.MENU;
+    currentMenu = new Menu([
+      {
+        name: 'Find factors',
+        callback: () => {
+          if (step === 'FIND_FACTORS') {
+            currentMenu = findFactorMenu;
+          } else {
+            state = BattleState.ATTACK;
+            currentMenu.end = true;
+            attack.run(0);
+          }
+        }
+      },
+      {
+        name: 'Factor',
+        callback: () => {}
+      },
+      {
+        name: 'Final groups',
+        callback: () => {}
+      }
+    ]);
   });
 
   ButtonManager.makeButton(183, textures.button.help, textures.button.helpSel, () => {
     switch (step) {
       case 'FIND_FACTORS':
-        box.setText('Find the factors of ' + equation.c + ' which\nadd up to equal ' + equation.b);
+        box.setText('Find the factors of ' + equation.c + ' which add\nup to equal ' + equation.b);
+        break;
+
+      case 'FACTOR':
+        box.setText('Factor out the items in the left and\nright parenthesis.')
         break;
     }
   });
@@ -95,37 +111,31 @@ const ready = () => {
 
     secondFactor = parseInt(secondFactor);
 
-    answerCorrect = firstFactor + secondFactor === parseInt(equation.b);
+    let attackCallback;
+    if (firstFactor + secondFactor === parseInt(equation.b)) {
+      attackCallback = () => {
+        attack.run(Math.floor(Math.random() * (textures.damage.length - 1)) + 1);
+        step = 'FACTOR';
+      };
+    } else {
+      attackCallback = () => {
+        attack.run(0);
+      };
+    }
 
     factorMenuItems.push({
       name: factor + ' & ' + secondFactor,
       callback: () => {
         state = BattleState.ATTACK;
-        state.callback();
+        currentMenu.end = true;
+        attackCallback();
       }
     });
   });
 
   const findFactorMenu = new Menu(factorMenuItems, () => currentMenu = solveMenu);
 
-  const solveMenu = new Menu([
-    {
-      name: 'Find factors',
-      callback: () => {
-        currentMenu = findFactorMenu;
-      }
-    },
-    {
-      name: 'Factor',
-      callback: () => {}
-    },
-    {
-      name: 'Final groups',
-      callback: () => {}
-    }
-  ]);
-
-  let currentMenu = solveMenu;
+  let currentMenu;
 
   currentFrame = {
     action: (action) => {
@@ -134,7 +144,6 @@ const ready = () => {
           switch (state) {
             case BattleState.CHOOSE:
               ButtonManager.confirm();
-              state = BattleState.MENU;
               break;
 
             case BattleState.MENU:
