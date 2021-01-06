@@ -5,9 +5,6 @@ class BattleState {
 }
 
 const ready = () => {
-  let textGoal = '';
-  let textRender = '';
-
   let answerCorrect = false;
 
   const box = new Box('* Expression blocks the way!');
@@ -125,8 +122,6 @@ const ready = () => {
             case BattleState.CHOOSE:
               ButtonManager.confirm();
               state = BattleState.MENU;
-              textGoal = '';
-              textRender = '';
               break;
 
             case BattleState.MENU:
@@ -136,8 +131,6 @@ const ready = () => {
           break;
 
         case Action.CANCEL:
-          textRender = textGoal;
-
           if (state === BattleState.MENU) {
             if (currentMenu.cancel() === false) {
               state = BattleState.CHOOSE;
