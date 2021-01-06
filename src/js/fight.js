@@ -156,7 +156,7 @@ const ready = () => {
               break;
           }
           break;
-          
+
         case Action.DOWN:
           switch (state) {
             case BattleState.MENU:
