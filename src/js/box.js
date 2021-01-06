@@ -14,14 +14,20 @@ class Box {
     this.goalWidth = 600;
   }
 
-  static setText(text) {
+  setText(text) {
     this.textGoal = text;
   }
 
-  resize(value, callback) {
+  grow(callback) {
+    this.goalWidth = 600;
     this.callback = callback;
+    this.done = false;
+  }
 
-    this.goalWidth = value;
+  shrink(callback) {
+    this.goalWidth = 120;
+    this.textGoal = '';
+    this.callback = callback;
     this.done = false;
   }
 

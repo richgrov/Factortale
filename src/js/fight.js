@@ -12,14 +12,14 @@ const ready = () => {
   const arena = new Arena(() => {
     findFactorMenu.end = false;
 
-    box.resize(600, () => {
+    box.grow(() => {
       state = BattleState.CHOOSE;
     });
   });
 
   const attack = new Attack(equation, () => {
     state = BattleState.BATTLE;
-    box.resize(120, () => {
+    box.shrink(() => {
       arena.sendAttack(true);
     });
   });
