@@ -3,6 +3,9 @@ class Equation {
     this.tick = 0;
     this.y = 70;
 
+    this.shakeTick = -1;
+    this.x = 0;
+
     if (b >= 0) {
       this.b = '+' + b;
     } else {
@@ -16,9 +19,20 @@ class Equation {
     }
   }
 
+  shake() {
+    this.shakeTick = 0;
+  }
+
   update() {
     this.tick += 0.1;
     this.y = 100 + (Math.sin(this.tick) * 2);
+
+    if (this.shakeTick > -1 && this.shakeTick < 50) {
+      this.shakeTick += 3;
+      this.x = Math.sin(this.shakeTick) * 10;
+    } else {
+      this.shakeTick = -1;
+    }
   }
 
   draw() {
@@ -35,6 +49,6 @@ class Equation {
   }
 
   center(x) {
-    return (WIDTH / 2) - (x / 2);
+    return ((WIDTH / 2) - (x / 2)) + this.x;
   }
 }

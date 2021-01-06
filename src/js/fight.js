@@ -4,8 +4,9 @@ const ready = () => {
   let textGoal = '';
   let textRender = '';
 
-  let attackResult = -1;
-  let attackFrames = -1;
+  const box = new Box();
+  const equation = new Equation(6, -16);
+  const attack = new Attack(equation);
 
   let boxWidth = 600;
 
@@ -27,9 +28,14 @@ const ready = () => {
     // menu items
   });
 
-  BattleState.ATTACK = new BattleState(3, () => {
+  BattleState.ATTACK = new BattleState(3, (correct) => {
     currentMenu.end = true;
-    attackFrames = 0;
+
+    if (correct) {
+      attack.run(Math.floor(Math.random() * (textures.damage.length - 1)) + 1);
+    } else {
+      attack.run(0);
+    }
   });
 
   let state = BattleState.CHOOSE;
@@ -42,7 +48,6 @@ const ready = () => {
     new Button(510, 3, textures.button.done, textures.button.doneSel)
   ];
 
-  const equation = new Equation(6, -16);
 
   const factors = [];
   for (let i = 0; i <= Math.abs(equation.c); i++) {
@@ -66,14 +71,12 @@ const ready = () => {
     if (firstFactor + secondFactor === parseInt(equation.b)) {
       callback = () => {
         state = BattleState.ATTACK;
-        state.callback();
-        attackResult = 50;
+        state.callback(true);
       }
     } else {
       callback = () => {
         state = BattleState.ATTACK;
-        state.callback();
-        attackResult = -1;
+        state.callback(false);
       }
     }
 
@@ -193,14 +196,7 @@ const ready = () => {
         }
       }
 
-      if (attackFrames > -1) {
-        if (attackFrames <= 5) {
-          attackFrames += 0.25;
-        } else {
-
-          attackFrames = -1;
-        }
-      }
+      attack.update();
 
       equation.update();
     },
@@ -218,15 +214,7 @@ const ready = () => {
 
       equation.draw();
 
-      if (attackFrames !== -1) {
-        const frame = textures.attack[Math.floor(attackFrames)];
-        if (attackFrames >= 4) {
-          // Draw the last few frames from the bottom of the image
-          ctx.drawImage(frame, WIDTH / 2, 140 - frame.height);
-        } else {
-          ctx.drawImage(frame, WIDTH / 2, 70);
-        }
-      }
+      attack.render();
 
       switch (state) {
         case BattleState.CHOOSE:
