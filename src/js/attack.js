@@ -22,7 +22,10 @@ class Attack {
         if (this.frames <= 5) {
           this.frames += 0.25;
         } else {
-          this.equation.shake();
+          if (this.attack !== 0) {
+            this.equation.shake();
+          }
+
           this.state = false;
           this.frames = -1;
         }
