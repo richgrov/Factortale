@@ -1,6 +1,7 @@
 class Attack {
-  constructor(equation) {
+  constructor(equation, done) {
     this.equation = equation;
+    this.done = done;
 
     this.attack = 0;
     this.frames = -1;
@@ -33,7 +34,9 @@ class Attack {
       }
       this.y = Math.sin(this.jump) * 15;
 
-      if (this.tick >= 100) {
+      if (this.tick >= 50) {
+        this.done();
+
         this.state = true;
         this.tick = 0;
         this.jump = 0;

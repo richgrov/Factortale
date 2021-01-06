@@ -1,3 +1,9 @@
+class BattleState {
+  constructor(id, callback) {
+    this.callback = callback;
+  }
+}
+
 const ready = () => {
   const textX = 40;
   const textY = 250;
@@ -6,15 +12,10 @@ const ready = () => {
 
   const box = new Box();
   const equation = new Equation(6, -16);
-  const attack = new Attack(equation);
-
-  let boxWidth = 600;
-
-  class BattleState {
-    constructor(id, callback) {
-      this.callback = callback;
-    }
-  }
+  const attack = new Attack(equation, () => {
+    state = BattleState.BATTLE;
+    box.resize(120);
+  });
 
   BattleState.INFO = new BattleState(0, () => {
     // type text
@@ -37,6 +38,8 @@ const ready = () => {
       attack.run(0);
     }
   });
+
+  BattleState.BATTLE = new BattleState(4);
 
   let state = BattleState.CHOOSE;
   state.callback();
@@ -196,24 +199,19 @@ const ready = () => {
         }
       }
 
+      box.update();
       attack.update();
-
       equation.update();
     },
     render: () => {
       // Draw all buttons
       buttons.forEach(button => button.render(state === BattleState.CHOOSE));
 
-      // Draw dialogue box
-      ctx.strokeStyle = 'white';
-      ctx.lineWidth = 3;
-      ctx.strokeRect((WIDTH - boxWidth) / 2, 240, boxWidth, 120);
-
       ctx.fillStyle = 'white';
       ctx.textBaseline = 'top';
 
-      equation.draw();
-
+      box.render();
+      equation.render();
       attack.render();
 
       switch (state) {

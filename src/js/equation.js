@@ -35,7 +35,7 @@ class Equation {
     }
   }
 
-  draw() {
+  render() {
     ctx.font = '40px Papyrus';
 
     ctx.textAlign = 'right';
