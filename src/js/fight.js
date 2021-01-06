@@ -71,6 +71,10 @@ const ready = () => {
 
               state.callback();
               break;
+
+            case BattleState.MENU:
+              currentMenu.move(action);
+              break;
           }
           break;
 
@@ -93,16 +97,35 @@ const ready = () => {
                 Button.selected--;
               }
               break;
+
+            case BattleState.MENU:
+              currentMenu.move(action);
+              break;
           }
           break;
 
         case Action.RIGHT:
-          if (state === BattleState.CHOOSE) {
-            if (Button.selected === 3) {
-              Button.selected = 0;
-            } else {
-              Button.selected++;
-            }
+          switch (state) {
+            case BattleState.CHOOSE:
+              if (Button.selected === 3) {
+                Button.selected = 0;
+              } else {
+                Button.selected++;
+              }
+              break;
+
+            case BattleState.MENU:
+              currentMenu.move(action);
+              break;
+          }
+          break;
+
+        case Action.UP:
+        case Action.DOWN:
+          switch (state) {
+            case BattleState.MENU:
+              currentMenu.move(action);
+              break;
           }
           break;
       }
