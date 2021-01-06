@@ -102,6 +102,10 @@ class Menu {
     }
 
     this.back();
+
+    this.selection = 0;
+    this.page = 0;
+
     return true;
   }
   render() {
