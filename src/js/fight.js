@@ -4,6 +4,9 @@ const ready = () => {
   let textGoal = '';
   let textRender = '';
 
+  let attackResult = -1;
+  let attackFrames = -1;
+
   let boxWidth = 600;
 
   class BattleState {
@@ -22,6 +25,11 @@ const ready = () => {
 
   BattleState.MENU = new BattleState(2, () => {
     // menu items
+  });
+
+  BattleState.ATTACK = new BattleState(3, () => {
+    currentMenu.end = true;
+    attackFrames = 0;
   });
 
   let state = BattleState.CHOOSE;
@@ -54,15 +62,24 @@ const ready = () => {
 
     secondFactor = parseInt(secondFactor);
 
+    let callback;
+    if (firstFactor + secondFactor === parseInt(equation.b)) {
+      callback = () => {
+        state = BattleState.ATTACK;
+        state.callback();
+        attackResult = 50;
+      }
+    } else {
+      callback = () => {
+        state = BattleState.ATTACK;
+        state.callback();
+        attackResult = -1;
+      }
+    }
+
     factorMenuItems.push({
       name: factor + ' & ' + secondFactor,
-      callback: () => {
-        if (firstFactor + secondFactor === parseInt(equation.b)) {
-          console.log('Correct answer');
-        } else {
-          console.log('Incorrect answer');
-        }
-      }
+      callback: callback
     });
   });
 
@@ -175,6 +192,15 @@ const ready = () => {
         }
       }
 
+      if (attackFrames > -1) {
+        if (attackFrames <= 5) {
+          attackFrames += 0.25;
+        } else {
+
+          attackFrames = -1;
+        }
+      }
+
       equation.update();
     },
     render: () => {
@@ -191,6 +217,16 @@ const ready = () => {
 
       equation.draw();
 
+      if (attackFrames !== -1) {
+        const frame = textures.attack[Math.floor(attackFrames)];
+        if (attackFrames >= 4) {
+          // Draw the last few frames from the bottom of the image
+          ctx.drawImage(frame, WIDTH / 2, 140 - frame.height);
+        } else {
+          ctx.drawImage(frame, WIDTH / 2, 70);
+        }
+      }
+
       switch (state) {
         case BattleState.CHOOSE:
           // Draw typewriter
@@ -200,6 +236,7 @@ const ready = () => {
           break;
 
         case BattleState.MENU:
+        case BattleState.ATTACK:
           currentMenu.render();
           break;
       }

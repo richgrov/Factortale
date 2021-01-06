@@ -2,6 +2,7 @@ class Menu {
   constructor(items, back) {
     this.items = items;
     this.back = back;
+    this.end = false;
     this.selection = 0;
     this.page = 0;
     this.pageCount = Math.ceil(this.items.length / 4);
@@ -103,16 +104,20 @@ class Menu {
 
     this.back();
 
+    this.end = false;
     this.selection = 0;
     this.page = 0;
 
     return true;
   }
+
   render() {
     ctx.font = '30px Determination Mono';
 
     // Draw the heart
-    ctx.drawImage(textures.heart, this.selection % 2 === 0 ? 40 : 320, this.selection < 2 ? 257 : 287)
+    if (!this.end) {
+      ctx.drawImage(textures.heart, this.selection % 2 === 0 ? 40 : 320, this.selection < 2 ? 257 : 287);
+    }
 
     for (let i = 0; i < Math.min(4, this.items.length - (this.page * 4)); i++) {
       const text = '* ' + this.items[i + (this.page * 4)].name;
