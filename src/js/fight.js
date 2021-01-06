@@ -5,14 +5,12 @@ class BattleState {
 }
 
 const ready = () => {
-  const textX = 40;
-  const textY = 250;
   let textGoal = '';
   let textRender = '';
 
   let answerCorrect = false;
 
-  const box = new Box();
+  const box = new Box('* Expression blocks the way!');
   const equation = new Equation(6, -16);
   const arena = new Arena(() => {
     findFactorMenu.end = false;
@@ -29,13 +27,9 @@ const ready = () => {
     });
   });
 
-  BattleState.INFO = new BattleState(0, () => {
-    // type text
-  });
+  BattleState.INFO = new BattleState(0);
 
-  BattleState.CHOOSE = new BattleState(1, () => {
-    textGoal = '* Expression blocks the way!';
-  });
+  BattleState.CHOOSE = new BattleState(1);
 
   BattleState.MENU = new BattleState(2);
 
@@ -52,7 +46,6 @@ const ready = () => {
   BattleState.BATTLE = new BattleState(4);
 
   let state = BattleState.CHOOSE;
-  state.callback();
 
   BattleState.get = () => {
     return state;
@@ -148,7 +141,6 @@ const ready = () => {
           if (state === BattleState.MENU) {
             if (currentMenu.cancel() === false) {
               state = BattleState.CHOOSE;
-              state.callback();
             }
           }
           break;
@@ -204,15 +196,6 @@ const ready = () => {
     },
     tick: () => {
       switch (state) {
-        case BattleState.INFO:
-        case BattleState.CHOOSE:
-          // Check to see if there are letters left
-          if (textGoal.length - textRender.length > 0) {
-            sounds.type.menu.cloneNode(true).play();
-            textRender += textGoal[textRender.length];
-          }
-          break;
-
         case BattleState.BATTLE:
           arena.update();
           break;
@@ -233,13 +216,6 @@ const ready = () => {
       attack.render();
 
       switch (state) {
-        case BattleState.CHOOSE:
-          // Draw typewriter
-          ctx.textAlign = 'left';
-          ctx.font = '30px Determination Mono';
-          ctx.fillText(textRender, textX, textY);
-          break;
-
         case BattleState.MENU:
         case BattleState.ATTACK:
           currentMenu.render();
