@@ -7,7 +7,7 @@ class Menu {
     this.pageCount = Math.ceil(this.items.length / 4);
   }
 
-  left(action) {
+  left() {
     // Try moving to the previous page if heart is on the left side.
     if ((this.selection === 0 || this.selection === 2)) {
       if (this.page > 0) {
