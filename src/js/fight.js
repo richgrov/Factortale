@@ -15,7 +15,6 @@ const ready = () => {
   const box = new Box();
   const equation = new Equation(6, -16);
   const arena = new Arena(() => {
-    ButtonManager.setActive(true);
     findFactorMenu.end = false;
 
     box.resize(600, () => {
@@ -28,7 +27,6 @@ const ready = () => {
     box.resize(120, () => {
       arena.sendAttack(true);
     });
-    ButtonManager.setActive(true);
   });
 
   BattleState.INFO = new BattleState(0, () => {
@@ -55,6 +53,10 @@ const ready = () => {
 
   let state = BattleState.CHOOSE;
   state.callback();
+
+  BattleState.get = () => {
+    return state;
+  };
 
   ButtonManager.makeButton(20, textures.button.solve, textures.button.solveSel, () => {
     currentMenu = solveMenu;

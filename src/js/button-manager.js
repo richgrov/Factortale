@@ -2,7 +2,6 @@ class ButtonManager {
   static Y = 400;
   static HEART_Y = ButtonManager.Y + 14;
   static selected = 0;
-  static active = true;
 
   static buttons = [];
 
@@ -16,7 +15,7 @@ class ButtonManager {
 
   static render(choose) {
     ButtonManager.buttons.forEach((button) => {
-      if (ButtonManager.selected === button.id && ButtonManager.active) {
+      if (ButtonManager.selected === button.id && (BattleState.get() === BattleState.CHOOSE || BattleState.get() === BattleState.MENU)) {
         ctx.drawImage(button.selectedTexture, button.x, ButtonManager.Y);
 
         if (choose) {
@@ -26,10 +25,6 @@ class ButtonManager {
         ctx.drawImage(button.texture, button.x, ButtonManager.Y);
       }
     });
-  }
-
-  static setActive(active) {
-    this.active = active;
   }
 
   static makeButton(x, texture, selectedTexture, onClick) {
