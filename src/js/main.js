@@ -48,7 +48,7 @@ let currentFrame = {
     ctx.scale(scale, scale);
   };
 
-  let textureQueue = 10;
+  let textureQueue = 16;
 
   /**
    * Loads a texture.
@@ -99,8 +99,14 @@ let currentFrame = {
         done: loadTexture('done.png'),
         doneSel: loadTexture('done-s.png')
       },
-      heart: loadTexture('heart.png')
+      heart: loadTexture('heart.png'),
+      attack: []
     };
+
+    // Load all attack animation frames
+    for (let i = 0; i <= 5; i++) {
+      textures.attack[i] = loadTexture('attack-' + i + '.png');
+    }
   };
 
   sounds = {
