@@ -23,6 +23,18 @@ class Attack {
           this.frames += 0.25;
         } else {
           if (this.attack !== 0) {
+            if (step === 'FACTOR') {
+              if (leftFactored) {
+                this.equation.a = 'x(x + ' + this.equation.correctFactors[0] + ')';
+              } else {
+                const factor1 = this.equation.correctFactors[0];
+                const factor2 = this.equation.correctFactors[1];
+
+                this.equation.a = '(' + this.equation.a + (factor1 > 0 ? '+' + factor1 : factor1) + 'x)';
+                this.equation.b = '';
+                this.equation.c = '(' + (factor2 > 0 ? '+' + factor2 : factor2) + 'x' + this.equation.c + ')';
+              }
+            }
             this.equation.shake();
           }
 

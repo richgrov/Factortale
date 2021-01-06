@@ -4,17 +4,30 @@ class BattleState {
   }
 }
 
+let step = 'FIND_FACTORS';
+let leftFactored = false;
+let rightFactored = false;
+
 const ready = () => {
-  let step = 'FIND_FACTORS';
 
   const box = new Box();
   box.setText('Expression blocks the way!');
 
   const equation = new Equation(6, -16);
   const arena = new Arena(() => {
-    findFactorMenu.end = false;
-
     box.grow(() => {
+      if (step === 'FACTOR') {
+        if (leftFactored) {
+          box.setText('X was factored out of the left\ngroup.')
+        } else if (rightFactored) {
+
+        } else {
+          box.setText(
+            'Factor 1 (' + equation.correctFactors[0] + ') was grouped with A.' +
+            '\n* Factor 2 (' + equation.correctFactors[1] + ') was group with B.'
+          );
+        }
+      }
       state = BattleState.CHOOSE;
     });
   });
@@ -49,29 +62,100 @@ const ready = () => {
 
   ButtonManager.makeButton(20, textures.button.solve, textures.button.solveSel, () => {
     state = BattleState.MENU;
-    currentMenu = new Menu([
+    currentMenu = solveMenu;
+  });
+
+  const leftFactorMenu = () => {
+    return new Menu([
       {
-        name: 'Find factors',
+        name: 'Factor out x',
         callback: () => {
-          if (step === 'FIND_FACTORS') {
-            currentMenu = findFactorMenu;
-          } else {
-            state = BattleState.ATTACK;
-            currentMenu.end = true;
-            attack.run(0);
+          leftFactored = true;
+
+          if (rightFactored) {
+            step = 'FINAL';
           }
+
+          attack.run(Math.floor(Math.random() * (textures.damage.length - 1)) + 1);
         }
       },
       {
-        name: 'Factor',
-        callback: () => {}
+        name: 'Factor out ' + equation.correctFactors[0],
+        callback: () => {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        }
       },
       {
-        name: 'Final groups',
-        callback: () => {}
+        name: 'Factor out x\u00B2',
+        callback: () => {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        }
+      },
+      {
+        name: 'Factor out ' + -equation.correctFactors[0],
+        callback: () => {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        }
       }
-    ]);
-  });
+    ], () => currentMenu = factorChooseMenu);
+  };
+
+  const factorChooseMenu = new Menu([
+    {
+      name: 'Left',
+      callback: () => {
+        if (leftFactored) {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        } else {
+          currentMenu = leftFactorMenu();
+        }
+      }
+    },
+    {
+      name: 'Right',
+      callback: () => {
+        if (rightFactored) {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        } else {
+
+        }
+      }
+    }
+  ], () => currentMenu = solveMenu);
+
+  const solveMenu = new Menu([
+    {
+      name: 'Find factors',
+      callback: () => {
+        if (step === 'FIND_FACTORS') {
+          currentMenu = findFactorMenu;
+        } else {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        }
+      }
+    },
+    {
+      name: 'Factor',
+      callback: () => {
+        if (step === 'FACTOR') {
+          currentMenu = factorChooseMenu;
+        } else {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        }
+      }
+    },
+    {
+      name: 'Final groups',
+      callback: () => {}
+    }
+  ]);
 
   ButtonManager.makeButton(183, textures.button.help, textures.button.helpSel, () => {
     switch (step) {
@@ -117,6 +201,7 @@ const ready = () => {
         attack.run(Math.floor(Math.random() * (textures.damage.length - 1)) + 1);
         step = 'FACTOR';
       };
+      equation.correctFactors = [firstFactor, secondFactor];
     } else {
       attackCallback = () => {
         attack.run(0);
@@ -127,7 +212,6 @@ const ready = () => {
       name: factor + ' & ' + secondFactor,
       callback: () => {
         state = BattleState.ATTACK;
-        currentMenu.end = true;
         attackCallback();
       }
     });

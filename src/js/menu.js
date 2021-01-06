@@ -2,7 +2,6 @@ class Menu {
   constructor(items, back) {
     this.items = items;
     this.back = back;
-    this.end = false;
     this.selection = 0;
     this.page = 0;
     this.pageCount = Math.ceil(this.items.length / 4);
@@ -104,7 +103,6 @@ class Menu {
 
     this.back();
 
-    this.end = false;
     this.selection = 0;
     this.page = 0;
 
@@ -115,7 +113,7 @@ class Menu {
     ctx.font = '30px Determination Mono';
 
     // Draw the heart
-    if (!this.end) {
+    if (BattleState.get() !== BattleState.ATTACK) {
       ctx.drawImage(textures.heart, this.selection % 2 === 0 ? 40 : 320, this.selection < 2 ? 257 : 287);
     }
 

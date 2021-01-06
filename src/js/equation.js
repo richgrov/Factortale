@@ -6,6 +6,8 @@ class Equation {
     this.shakeTick = -1;
     this.x = 0;
 
+    this.a = 'x\u00B2';
+
     if (b >= 0) {
       this.b = '+' + b;
     } else {
@@ -39,7 +41,7 @@ class Equation {
     ctx.font = '40px Papyrus';
 
     ctx.textAlign = 'right';
-    ctx.fillText('x\u00B2', this.center(50), this.y);
+    ctx.fillText(this.a, this.center(50), this.y);
 
     ctx.textAlign = 'center';
     ctx.fillText(this.b, this.center(0), this.y);
