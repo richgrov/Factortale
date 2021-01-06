@@ -101,7 +101,7 @@ const ready = () => {
               break;
 
             case BattleState.MENU:
-              currentMenu.move(action);
+              currentMenu.confirm();
               break;
           }
           break;
@@ -110,7 +110,7 @@ const ready = () => {
           textRender = textGoal;
 
           if (state === BattleState.MENU) {
-            if (currentMenu.move(action) === false) {
+            if (currentMenu.cancel() === false) {
               state = BattleState.CHOOSE;
               state.callback();
             }
@@ -128,7 +128,7 @@ const ready = () => {
               break;
 
             case BattleState.MENU:
-              currentMenu.move(action);
+              currentMenu.left();
               break;
           }
           break;
@@ -144,16 +144,23 @@ const ready = () => {
               break;
 
             case BattleState.MENU:
-              currentMenu.move(action);
+              currentMenu.right();
               break;
           }
           break;
 
         case Action.UP:
+          switch (state) {
+            case BattleState.MENU:
+              currentMenu.up();
+              break;
+          }
+          break;
+          
         case Action.DOWN:
           switch (state) {
             case BattleState.MENU:
-              currentMenu.move(action);
+              currentMenu.down();
               break;
           }
           break;
