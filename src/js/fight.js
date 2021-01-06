@@ -34,30 +34,58 @@ const ready = () => {
     new Button(510, 3, textures.button.done, textures.button.doneSel)
   ];
 
+  const equation = new Equation(6, -16);
+
+  const factors = [];
+  for (let i = 0; i <= Math.abs(equation.c); i++) {
+    if (equation.c % i === 0) {
+      factors.push(i);
+    }
+  }
+
+  const factorMenuItems = [];
+  factors.forEach((factor, i) => {
+    let firstFactor = parseInt(factor);
+    let secondFactor = factors[factors.length - i - 1];
+
+    if (equation.c < 0) {
+      secondFactor = '-' + secondFactor;
+    }
+
+    secondFactor = parseInt(secondFactor);
+
+    factorMenuItems.push({
+      name: factor + ' & ' + secondFactor,
+      callback: () => {
+        if (firstFactor + secondFactor === parseInt(equation.b)) {
+          console.log('Correct answer');
+        } else {
+          console.log('Incorrect answer');
+        }
+      }
+    });
+  });
+
+  const findFactorMenu = new Menu(factorMenuItems, () => currentMenu = solveMenu);
+
   const solveMenu = new Menu([
     {
       name: 'Find factors',
-      action: () => {
-
+      callback: () => {
+        currentMenu = findFactorMenu;
       }
     },
     {
       name: 'Factor',
-      action: () => {
-
-      }
+      callback: () => {}
     },
     {
       name: 'Final groups',
-      action: () => {
-
-      }
+      callback: () => {}
     }
   ]);
 
   let currentMenu = solveMenu;
-
-  const equation = new Equation(6, -16);
 
   currentFrame = {
     action: (action) => {
@@ -82,9 +110,10 @@ const ready = () => {
           textRender = textGoal;
 
           if (state === BattleState.MENU) {
-            state = BattleState.CHOOSE;
-
-            state.callback();
+            if (currentMenu.move(action) === false) {
+              state = BattleState.CHOOSE;
+              state.callback();
+            }
           }
           break;
 

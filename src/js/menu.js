@@ -1,6 +1,7 @@
 class Menu {
-  constructor(items) {
+  constructor(items, back) {
     this.items = items;
+    this.back = back;
     this.selection = 0;
     this.page = 0;
     this.pageCount = Math.ceil(this.items.length / 4);
@@ -96,6 +97,14 @@ class Menu {
       case Action.CONFIRM:
         this.items[(this.page * 4) + this.selection].callback();
         break;
+
+      case Action.CANCEL:
+        if (typeof this.back === 'undefined') {
+          return false;
+        }
+
+        this.back();
+        return true;
     }
   }
 
