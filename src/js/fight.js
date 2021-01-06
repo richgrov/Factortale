@@ -24,12 +24,16 @@ const ready = () => {
     });
   });
 
+  // When text is shown to the user
   BattleState.INFO = new BattleState(0);
 
+  // When only one page of text is shown to the user, who can use the bottom buttons
   BattleState.CHOOSE = new BattleState(1);
 
+  // When the user has chosen a button and is in the menu
   BattleState.MENU = new BattleState(2);
 
+  // When the attack and damage animation is being played
   BattleState.ATTACK = new BattleState(3, () => {
     currentMenu.end = true;
 
@@ -40,6 +44,7 @@ const ready = () => {
     }
   });
 
+  // When the player can move around the arena
   BattleState.BATTLE = new BattleState(4);
 
   let state = BattleState.CHOOSE;
