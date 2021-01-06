@@ -188,7 +188,8 @@ const ready = () => {
       if (state === BattleState.INFO || state === BattleState.CHOOSE) {
         // Check to see if there are letters left
         if (textGoal.length - textRender.length > 0) {
-            textRender += textGoal[textRender.length];
+          sounds.type.menu.cloneNode(true).play();
+          textRender += textGoal[textRender.length];
         }
       }
 

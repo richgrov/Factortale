@@ -69,6 +69,22 @@ let currentFrame = {
     return image;
   };
 
+  /**
+   * Loads a sound file.
+   *
+   * @param name The file name of the sound, without 'sfx/' prepended.
+   * @param volume Volume of the sound.
+   */
+  const loadAudio = (name, volume) => {
+    const audio = new Audio('sfx/' + name);
+
+    if (typeof volume !== 'undefined') {
+      audio.volume = volume;
+    }
+
+    return audio;
+  }
+
  window.onload = () => {
     // Initialize canvas & context + check for compatibility
     canvas = document.getElementById('frame');
@@ -107,12 +123,12 @@ let currentFrame = {
     for (let i = 0; i <= 5; i++) {
       textures.attack[i] = loadTexture('attack-' + i + '.png');
     }
-  };
 
-  sounds = {
-    type: {
-
-    }
+    sounds = {
+      type: {
+        menu: loadAudio('type-menu.wav', 0.5)
+      }
+    };
   };
 
   let time = Date.now();
