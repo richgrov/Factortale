@@ -19,6 +19,8 @@ class Equation {
     } else {
       this.c = c;
     }
+
+    this.originalC = this.c;
   }
 
   shake() {

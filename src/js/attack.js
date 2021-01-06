@@ -16,6 +16,15 @@ class Attack {
     this.attack = attack;
   }
 
+  factorA() {
+    this.equation.a = 'x(x + ' + this.equation.correctFactors[0] + ')';
+  }
+
+  factorC() {
+    const factor = this.equation.correctFactors[1];
+    this.equation.c = factor + '(x + ' + (this.equation.originalC / factor) + ')';
+  }
+
   update() {
     if (this.state) {
       if (this.frames > -1) {
@@ -25,7 +34,9 @@ class Attack {
           if (this.attack !== 0) {
             if (step === 'FACTOR') {
               if (leftFactored) {
-                this.equation.a = 'x(x + ' + this.equation.correctFactors[0] + ')';
+                this.factorA();
+              } else if (rightFactored) {
+                this.factorC();
               } else {
                 const factor1 = this.equation.correctFactors[0];
                 const factor2 = this.equation.correctFactors[1];
@@ -34,7 +45,11 @@ class Attack {
                 this.equation.b = '';
                 this.equation.c = '(' + (factor2 > 0 ? '+' + factor2 : factor2) + 'x' + this.equation.c + ')';
               }
+            } else if (step === 'FINAL') {
+              this.factorA();
+              this.factorC();
             }
+
             this.equation.shake();
           }
 

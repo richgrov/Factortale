@@ -20,7 +20,7 @@ const ready = () => {
         if (leftFactored) {
           box.setText('X was factored out of the left\ngroup.')
         } else if (rightFactored) {
-
+          box.setText(equation.correctFactors[1] + ' was factored out of the right\ngroup.')
         } else {
           box.setText(
             'Factor 1 (' + equation.correctFactors[0] + ') was grouped with A.' +
@@ -103,6 +103,44 @@ const ready = () => {
     ], () => currentMenu = factorChooseMenu);
   };
 
+  const rightFactorMenu = () => {
+    return new Menu([
+      {
+        name: 'Factor out ' + equation.correctFactors[1],
+        callback: () => {
+          rightFactored = true;
+
+          if (leftFactored) {
+            step = 'FINAL';
+          }
+
+          attack.run(Math.floor(Math.random() * (textures.damage.length - 1)) + 1);
+        }
+      },
+      {
+        name: 'Factor out x',
+        callback: () => {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        }
+      },
+      {
+        name: 'Factor out ' + -equation.correctFactors[1],
+        callback: () => {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        }
+      },
+      {
+        name: 'Factor out ' + equation.originalC,
+        callback: () => {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        }
+      }
+    ], () => currentMenu = factorChooseMenu);
+  };
+
   const factorChooseMenu = new Menu([
     {
       name: 'Left',
@@ -122,7 +160,7 @@ const ready = () => {
           state = BattleState.ATTACK;
           attack.run(0);
         } else {
-
+          currentMenu = rightFactorMenu();
         }
       }
     }
