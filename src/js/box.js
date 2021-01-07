@@ -73,7 +73,7 @@ class Box {
       ctx.font = '30px Determination Mono';
 
       this.textRender.forEach((text, i) => {
-        ctx.fillText(text, Box.TEXT_X, Box.TEXT_Y + (i * 40));
+        ctx.fillText(text, Box.TEXT_X, Box.TEXT_Y + (i * 35));
       });
     }
 
