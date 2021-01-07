@@ -16,7 +16,11 @@ class Entity {
     const b = this.y - Arena.playerY;
 
     if (Math.sqrt((a * a) + (b * b)) <= this.collisionDistance) {
-      player.subtractHealth(this.damage);
+      if (this.damage > 0) {
+        player.addHealth(this.damage);
+      } else {
+        player.subtractHealth(-this.damage);
+      }
     }
   }
 }
