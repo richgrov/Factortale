@@ -202,7 +202,7 @@ const ready = () => {
 
     answer = '(x' + secondFactor + ')(x' + firstFactor + ')';
 
-    return new Menu([
+    const array = shuffle([
       {
         name: answer,
         callback: () => {
@@ -235,7 +235,9 @@ const ready = () => {
           attack.run();
         }
       }
-    ], () => currentMenu = solveMenu);
+    ]);
+
+    return new Menu(array, () => currentMenu = solveMenu);
   }
 
   const solveMenu = new Menu([
