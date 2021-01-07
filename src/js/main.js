@@ -48,7 +48,7 @@ let currentFrame = {
     ctx.scale(scale, scale);
   };
 
-  let textureQueue = 19;
+  let textureQueue = 20;
 
   /**
    * Loads a texture.
@@ -120,7 +120,8 @@ let currentFrame = {
       attack: [],
       damage: [],
       arena: {
-        popper: loadTexture('popper.png')
+        popper: loadTexture('popper.png'),
+        i: loadTexture('i.png')
       }
     };
 
