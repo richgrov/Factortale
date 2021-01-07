@@ -154,7 +154,7 @@ class Arena {
         break;
 
       case 2:
-        this.timeLeft = 500;
+        this.timeLeft = 400;
         this.attack = 2;
         break;
     }
