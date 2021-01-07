@@ -324,6 +324,7 @@ const ready = () => {
     if (step === 'DONE') {
       equation.free = true;
       state = BattleState.INFO;
+      sounds.music.pause();
       sounds.spare.play();
       box.setText('YOU WON!\n* You earned 0 XP and ' + random(10) + ' gold.');
     } else {
@@ -382,7 +383,11 @@ const ready = () => {
 
   sounds.music.play();
   setInterval(() => {
-    sounds.music.cloneNode().play();
+    if (!equation.free) {
+      sounds.music.pause();
+      sounds.music.currentTime = 0;
+      sounds.music.play();
+    }
   }, 55000);
 
   currentFrame = {
