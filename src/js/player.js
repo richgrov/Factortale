@@ -1,6 +1,5 @@
 class Player {
   static BAR_X = 270;
-  static MAX_WIDTH = 50;
   static SIZE = 25;
 
   constructor() {
