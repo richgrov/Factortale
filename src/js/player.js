@@ -10,12 +10,8 @@ class Player {
   }
 
   addHealth(amount) {
-    const now = Date.now();
-    if (now - this.lastHurt > 1000) {
-      this.health = Math.min(this.health + amount, this.maxHealth);
-      sounds.heal.play();
-      this.lastHurt = now;
-    }
+    this.health = Math.min(this.health + amount, this.maxHealth);
+    sounds.heal.play();
   }
 
   subtractHealth(amount) {
