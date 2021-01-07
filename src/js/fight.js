@@ -29,6 +29,10 @@ const ready = () => {
             '\n* Factor 2 (' + equation.correctFactors[1] + ') was group with B.'
           );
         }
+      } else if (step === 'FINAL') {
+        box.setText('Both groups have been factored.');
+      } else {
+        box.setText('New groups are formed.');
       }
       state = BattleState.CHOOSE;
     });
@@ -252,7 +256,15 @@ const ready = () => {
         break;
 
       case 'FACTOR':
-        box.setText('Factor out the items in the left and\nright parenthesis.')
+        box.setText('Factor out the items in the left and\nright parenthesis.');
+        break;
+
+      case 'FINAL':
+        box.setText('Put the outer terms in one group,\nand multiply them by one of the\ncurrent groups.')
+        break;
+
+      case 'DONE':
+        box.setText('You are finished, select [DONE].')
         break;
     }
   });
