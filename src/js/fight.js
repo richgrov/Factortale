@@ -50,7 +50,7 @@ const ready = () => {
         } else {
           box.setText(
             'Factor 1 (' + equation.correctFactors[0] + ') was grouped with A.' +
-            '\n* Factor 2 (' + equation.correctFactors[1] + ') was group with B.'
+            '\n* Factor 2 (' + equation.correctFactors[1] + ') was grouped with B.'
           );
         }
       } else if (step === 'FINAL') {
