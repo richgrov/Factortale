@@ -218,8 +218,14 @@ class Arena {
   }
 
   render() {
+    if (player.hurtTicks > 0 && player.hurtTicks % 5 <= 1) {
+      ctx.globalAlpha = 0.7;
+    }
+
     const heart = textures.heart;
-    ctx.drawImage(heart, Arena.playerX - (heart.width / 2) + 320, Arena.playerY - (heart.width / 2) + 300)
+    ctx.drawImage(heart, Arena.playerX - (heart.width / 2) + 320, Arena.playerY - (heart.width / 2) + 300);
+
+    ctx.globalAlpha = 1;
 
     this.entities.forEach(entity => entity.render());
   }

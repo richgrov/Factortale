@@ -5,7 +5,7 @@ class Player {
   constructor() {
     this.health = 20;
     this.maxHealth = 20;
-    this.lastHurt = Date.now();
+    this.hurtTicks = 0;
   }
 
   addHealth(amount) {
@@ -14,11 +14,16 @@ class Player {
   }
 
   subtractHealth(amount) {
-    const now = Date.now();
-    if (now - this.lastHurt > 1000) {
+    if (this.hurtTicks === 0) {
       this.health = Math.max(this.health - amount, 0);
       sounds.hurt.play();
-      this.lastHurt = now;
+      this.hurtTicks = 33;
+    }
+  }
+
+  update() {
+    if (this.hurtTicks > 0) {
+      this.hurtTicks--;
     }
   }
 

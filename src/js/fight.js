@@ -470,6 +470,7 @@ const ready = () => {
       switch (state) {
         case BattleState.BATTLE:
           arena.update();
+          player.update();
           break;
       }
 
