@@ -53,7 +53,6 @@ class Arena {
   }
 
   sendAttack(isPositive) {
-
     if (isPositive) {
       this.timeLeft = 150;
       this.entities.push(new Popper());
