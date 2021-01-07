@@ -1,11 +1,11 @@
 class Entity {
-  constructor(x, y, dirX, dirY, collisionDistance, damage) {
+  constructor(x, y, dirX, dirY, collisionDistance, callback) {
     this.x = x;
     this.y = y;
     this.dirX = dirX;
     this.dirY = dirY;
     this.collisionDistance = collisionDistance;
-    this.damage = damage;
+    this.callback = callback;
   }
 
   update() {
@@ -16,18 +16,14 @@ class Entity {
     const b = this.y - Arena.playerY;
 
     if (Math.sqrt((a * a) + (b * b)) <= this.collisionDistance) {
-      if (this.damage > 0) {
-        player.addHealth(this.damage);
-      } else {
-        player.subtractHealth(-this.damage);
-      }
+      this.callback();
     }
   }
 }
 
 class BouncingEntity extends Entity {
-  constructor(x, y, dirX, dirY, collisionDistance, damage) {
-    super(x, y, dirX, dirY, collisionDistance, damage);
+  constructor(x, y, dirX, dirY, collisionDistance, callback) {
+    super(x, y, dirX, dirY, collisionDistance, callback);
   }
 
   update() {
@@ -45,7 +41,10 @@ class BouncingEntity extends Entity {
 
 class Popper extends BouncingEntity {
   constructor() {
-    super(20, -30, 2, 2, 16, 5);
+    super(20, -30, 2, 2, 16, () => {
+      player.addHealth(5);
+      this.touched = true;
+    });
 
     this.touched = false;
   }
@@ -64,7 +63,7 @@ class Popper extends BouncingEntity {
 
 class BouncingOrb extends BouncingEntity {
   constructor() {
-    super(20, -30, random(2) + 1, random(2) + 1, 16, -2);
+    super(20, -30, random(2) + 1, random(2) + 1, 16, () => player.subtractHealth(2));
   }
 
   update() {
@@ -79,7 +78,7 @@ class BouncingOrb extends BouncingEntity {
 
 class Particle extends Entity {
   constructor(x, y, dirX, dirY) {
-    super(x, y, dirX, dirY, 16, -3);
+    super(x, y, dirX, dirY, 16, () => player.subtractHealth(3));
 
     this.lifetime = 0;
   }
@@ -101,7 +100,7 @@ class Particle extends Entity {
 
 class Wall extends Entity {
   constructor(x, y) {
-    super(x, y, 0, 2, 16, -4);
+    super(x, y, 0, 2, 16, () => player.subtractHealth(4));
 
     this.lifetime = 0;
   }
