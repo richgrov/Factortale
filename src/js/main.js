@@ -137,7 +137,8 @@ let currentFrame = {
     sounds = {
       type: {
         menu: loadAudio('type-menu.wav', 0.5)
-      }
+      },
+      damage: loadAudio('damage.wav')
     };
   };
 

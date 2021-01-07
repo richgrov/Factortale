@@ -25,6 +25,7 @@ class Equation {
   }
 
   shake() {
+    sounds.damage.play();
     this.shakeTick = 0;
   }
 
