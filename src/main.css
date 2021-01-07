@@ -16,6 +16,15 @@
 
 }
 
+/*
+  I ALSO DID NOT MAKE THIS FONT!
+  Credit: https://fonts2u.com/mars-needs-cunnilingus.font
+ */
+@font-face {
+  font-family: 'Mars Needs Cunnilingus';
+  src: url('font/mars-needs-cunnilingus.ttf') format('truetype');
+}
+
 body {
     margin: 0;
     background-color: black;
