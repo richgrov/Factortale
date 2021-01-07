@@ -55,8 +55,10 @@ const ready = () => {
         }
       } else if (step === 'FINAL') {
         box.setText('Both groups have been factored.');
-      } else {
+      } else if (step === 'DONE') {
         box.setText('New groups are formed.');
+      } else {
+        box.setText('Expression remains the same.');
       }
       state = BattleState.CHOOSE;
     });
