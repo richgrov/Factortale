@@ -6,7 +6,7 @@ class Attack {
     this.equation = equation;
     this.done = done;
 
-    this.attack = 0;
+    this.attack = 'MISS';
     this.frames = -1;
     this.jump = 0;
     this.tick = 0;
@@ -18,7 +18,7 @@ class Attack {
   run() {
     sounds.cast.play();
     this.frames = 0;
-    this.attack = answerCorrect ? random(textures.damage.length - 1) + 1 : 0;
+    this.attack = answerCorrect ? random(7) + 33 : 'MISS';
   }
 
   factorA() {
@@ -36,7 +36,7 @@ class Attack {
         if (this.frames <= 5) {
           this.frames += 0.25;
         } else {
-          if (this.attack !== 0) {
+          if (this.attack !== 'MISS') {
             if (step === 'FACTOR') {
               if (leftFactored) {
                 this.factorA();
@@ -98,10 +98,15 @@ class Attack {
         }
       }
     } else {
-      const img = textures.damage[this.attack];
-      ctx.drawImage(img, (WIDTH / 2) - (img.width / 2), 30 - this.y);
+      ctx.font = '30px Hachicro';
+      if (this.attack === 'MISS') {
+        ctx.fillStyle = 'white';
+      } else {
+        ctx.fillStyle = '#ff1800';
+      }
+      ctx.fillText(this.attack, (WIDTH / 2) - 30, 30 - this.y);
 
-      if (this.attack !== 0) {
+      if (this.attack !== 'MISS') {
         ctx.strokeStyle = 'black';
         ctx.strokeWidth = 0.5;
         ctx.strokeRect((WIDTH / 2) - ((Attack.BAR_WIDTH + 2) / 2), 79, Attack.BAR_WIDTH + 2, 12);

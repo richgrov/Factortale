@@ -118,7 +118,6 @@ let currentFrame = {
       },
       heart: loadTexture('heart.png'),
       attack: [],
-      damage: [],
       arena: {
         popper: loadTexture('popper.png'),
         i: loadTexture('i.png'),
@@ -130,12 +129,6 @@ let currentFrame = {
     // Load all attack animation frames
     for (let i = 0; i <= 5; i++) {
       textures.attack[i] = loadTexture('attack-' + i + '.png');
-    }
-
-    // Load miss & damage numbers
-    textures.damage[0] = loadTexture('miss.png');
-    for (let i = 1; i <= 1; i++) {
-      textures.damage[i] = loadTexture('damage-' + i + '.png');
     }
 
     sounds = {

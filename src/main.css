@@ -25,6 +25,12 @@
   src: url('font/mars-needs-cunnilingus.ttf') format('truetype');
 }
 
+/* FONT CREDIT: https://www.dafont.com/hachicro.font */
+@font-face {
+  font-family: 'Hachicro';
+  src: url('font/hachicro.ttf') format('truetype');
+}
+
 body {
     margin: 0;
     background-color: black;
