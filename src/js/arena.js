@@ -108,6 +108,35 @@ class Particle extends MovingEntity {
   }
 }
 
+class Wall extends MovingEntity {
+  constructor(x, y) {
+    super(x, y, 0, 2);
+
+    this.lifetime = 0;
+  }
+
+  update() {
+    if (this.lifetime <= 80) {
+      super.update();
+      this.lifetime++;
+
+      const a = this.x - Arena.playerX;
+      const b = this.y - Arena.playerY;
+
+      if (Math.sqrt((a * a) + (b * b)) <= 16) {
+        player.subtractHealth(2);
+      }
+    }
+  }
+
+  render() {
+    if (this.lifetime < 80) {
+      const texture = textures.arena.wall;
+      ctx.drawImage(texture, this.x - (texture.width / 2) + 320, this.y - (texture.height / 2) + 300);
+    }
+  }
+}
+
 class Arena {
   static SPEED = 3;
   static LIMIT = 50;
@@ -130,13 +159,18 @@ class Arena {
       this.entities.push(new Popper());
     }
 
-    switch (random(2)) {
+    switch (2) {
       case 0:
         this.attack = 0;
         break;
 
       case 1:
         this.attack = 1;
+        break;
+
+      case 2:
+        this.timeLeft = 500;
+        this.attack = 2;
         break;
     }
   }
@@ -173,6 +207,16 @@ class Arena {
       } else if (this.attack === 1) {
         if (this.timeLeft % 30 === 0) {
           this.entities.push(new BouncingOrb());
+        }
+      } else if (this.attack === 2) {
+        if (this.timeLeft % 45 === 0) {
+          const gap = random(5);
+
+          for (let i = 0; i < 5; i++) {
+            if (i !== gap) {
+              this.entities.push(new Wall((i * 25) - 50, -100));
+            }
+          }
         }
       }
 
