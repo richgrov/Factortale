@@ -65,13 +65,13 @@ class Equation {
     }
 
     ctx.textAlign = 'right';
-    ctx.fillText(this.a, this.center(50), this.y);
+    ctx.fillText(this.a, this.center(70), this.y);
 
     ctx.textAlign = 'center';
     ctx.fillText(this.b, this.center(0), this.y);
 
     ctx.textAlign = 'left';
-    ctx.fillText(this.c, this.center(-50), this.y);
+    ctx.fillText(this.c, this.center(-70), this.y);
   }
 
   center(x) {
