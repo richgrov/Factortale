@@ -1,12 +1,7 @@
-class Popper {
-  constructor() {
-    this.dirX = 2;
-    this.dirY = 2;
-
-    this.x = 20;
-    this.y = -30;
-
-    this.touched = false;
+class BouncingEntity {
+  constructor(dirX, dirY) {
+    this.dirX = dirX;
+    this.dirY = dirY;
   }
 
   update() {
@@ -17,6 +12,21 @@ class Popper {
     if (this.y < -Arena.LIMIT || this.y > Arena.LIMIT) {
       this.dirY = -this.dirY;
     }
+  }
+}
+
+class Popper extends BouncingEntity {
+  constructor() {
+    super(2, 2);
+
+    this.x = 20;
+    this.y = -30;
+
+    this.touched = false;
+  }
+
+  update() {
+    super.update();
 
     this.x += this.dirX;
     this.y += this.dirY;
@@ -38,6 +48,34 @@ class Popper {
   }
 }
 
+class BouncingOrb extends BouncingEntity {
+  constructor() {
+    super(random(2) + 1, random(2) + 1);
+
+    this.x = 20;
+    this.y = -30;
+  }
+
+  update() {
+    super.update();
+
+    this.x += this.dirX;
+    this.y += this.dirY;
+
+    const a = this.x - Arena.playerX;
+    const b = this.y - Arena.playerY;
+
+    if (Math.sqrt((a * a) + (b * b)) <= 16) {
+      player.subtractHealth(2);
+    }
+  }
+
+  render() {
+    const texture = textures.arena.i;
+    ctx.drawImage(texture, this.x - (texture.width / 2) + 320, this.y - (texture.height / 2) + 300);
+  }
+}
+
 class Arena {
   static SPEED = 3;
   static LIMIT = 50;
@@ -47,6 +85,7 @@ class Arena {
 
   constructor(callback) {
     this.callback = callback;
+    this.attack = 0;
 
     this.entities = [];
     this.timeLeft = -1;
@@ -57,6 +96,13 @@ class Arena {
       this.timeLeft = 150;
       this.entities.push(new Popper());
     } else {
+      switch (random(2)) {
+        case 0:
+        case 1:
+          this.timeLeft = 150;
+          this.attack = 1;
+          break;
+      }
     }
   }
 
@@ -83,6 +129,10 @@ class Arena {
 
     if (this.timeLeft > -1) {
       this.timeLeft--;
+
+      if (this.attack === 1 && this.timeLeft % 30 === 0) {
+        this.entities.push(new BouncingOrb());
+      }
 
       if (this.timeLeft === -1) {
         Arena.playerX = 0;
