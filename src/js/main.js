@@ -140,6 +140,7 @@ let currentFrame = {
       type: {
         menu: loadAudio('type-menu.wav', 0.5)
       },
+      cycle: loadAudio('cycle.wav'),
       confirm: loadAudio('confirm.wav'),
       cast: loadAudio('cast.wav'),
       damage: loadAudio('damage.wav'),
