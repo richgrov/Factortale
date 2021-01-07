@@ -42,8 +42,10 @@ class BouncingEntity extends Entity {
 class Popper extends BouncingEntity {
   constructor() {
     super(20, -30, 2, 2, 16, () => {
-      player.addHealth(5);
-      this.touched = true;
+      if (!this.touched) {
+        player.addHealth(5);
+        this.touched = true;
+      }
     });
 
     this.touched = false;
