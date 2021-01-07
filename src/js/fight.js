@@ -7,6 +7,7 @@ class BattleState {
 let step = 'FIND_FACTORS';
 let leftFactored = false;
 let rightFactored = false;
+let answer;
 
 const ready = () => {
 
@@ -166,6 +167,47 @@ const ready = () => {
     }
   ], () => currentMenu = solveMenu);
 
+  const finalGroupsMenu = () => {
+    let firstFactor = equation.correctFactors[0];
+    let secondFactor = equation.correctFactors[1];
+
+    firstFactor = firstFactor > 0 ? '+' + firstFactor : firstFactor;
+    secondFactor = secondFactor > 0 ? '+' + secondFactor : secondFactor;
+
+    answer = '(x' + secondFactor + ')(x' + firstFactor + ')';
+
+    return new Menu([
+      {
+        name: answer,
+        callback: () => {
+          step = 'DONE';
+          attack.run(Math.floor(Math.random() * (textures.damage.length - 1)) + 1);
+        }
+      },
+      {
+        name: '(x' + -secondFactor + ')(x' + firstFactor + ')',
+        callback: () => {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        }
+      },
+      {
+        name: '(x' + secondFactor + ')(x' + -firstFactor + ')',
+        callback: () => {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        }
+      },
+      {
+        name: '(x' + -secondFactor + ')(x' + -firstFactor + ')',
+        callback: () => {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        }
+      }
+    ], () => currentMenu = solveMenu);
+  }
+
   const solveMenu = new Menu([
     {
       name: 'Find factors',
@@ -191,7 +233,14 @@ const ready = () => {
     },
     {
       name: 'Final groups',
-      callback: () => {}
+      callback: () => {
+        if (step === 'FINAL') {
+          currentMenu = finalGroupsMenu();
+        } else {
+          state = BattleState.ATTACK;
+          attack.run(0);
+        }
+      }
     }
   ]);
 
@@ -212,7 +261,14 @@ const ready = () => {
   });
 
   ButtonManager.makeButton(510, textures.button.done, textures.button.doneSel, () => {
-
+    if (step === 'DONE') {
+      equation.free = true;
+      state = BattleState.INFO;
+      box.setText('YOU WON!\n* You earned 0 XP and ' + (Math.floor(Math.random() * 10)) + ' gold.');
+    } else {
+      state = BattleState.ATTACK;
+      attack.run(0);
+    }
   });
 
   const factors = [];

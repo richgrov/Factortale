@@ -48,6 +48,10 @@ class Attack {
             } else if (step === 'FINAL') {
               this.factorA();
               this.factorC();
+            } else {
+              this.equation.a = '';
+              this.equation.b = answer;
+              this.equation.c = '';
             }
 
             this.equation.shake();

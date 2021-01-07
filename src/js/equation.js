@@ -21,6 +21,7 @@ class Equation {
     }
 
     this.originalC = this.c;
+    this.free = false;
   }
 
   shake() {
@@ -28,6 +29,8 @@ class Equation {
   }
 
   update() {
+    if (this.free) return;
+
     this.tick += 0.1;
     this.y = 100 + (Math.sin(this.tick) * 2);
 
@@ -41,6 +44,10 @@ class Equation {
 
   render() {
     ctx.font = '40px Papyrus';
+
+    if (this.free) {
+      ctx.fillStyle = 'gray';
+    }
 
     ctx.textAlign = 'right';
     ctx.fillText(this.a, this.center(50), this.y);
