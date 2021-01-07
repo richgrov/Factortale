@@ -1,20 +1,29 @@
-class MovingEntity {
-  constructor(x, y, dirX, dirY) {
+class Entity {
+  constructor(x, y, dirX, dirY, collisionDistance, damage) {
     this.x = x;
     this.y = y;
     this.dirX = dirX;
     this.dirY = dirY;
+    this.collisionDistance = collisionDistance;
+    this.damage = damage;
   }
 
   update() {
     this.x += this.dirX;
     this.y += this.dirY;
+
+    const a = this.x - Arena.playerX;
+    const b = this.y - Arena.playerY;
+
+    if (Math.sqrt((a * a) + (b * b)) <= this.collisionDistance) {
+      player.subtractHealth(this.damage);
+    }
   }
 }
 
-class BouncingEntity extends MovingEntity {
-  constructor(x, y, dirX, dirY) {
-    super(x, y, dirX, dirY);
+class BouncingEntity extends Entity {
+  constructor(x, y, dirX, dirY, collisionDistance, damage) {
+    super(x, y, dirX, dirY, collisionDistance, damage);
   }
 
   update() {
@@ -32,21 +41,13 @@ class BouncingEntity extends MovingEntity {
 
 class Popper extends BouncingEntity {
   constructor() {
-    super(20, -30, 2, 2);
+    super(20, -30, 2, 2, 16, 5);
 
     this.touched = false;
   }
 
   update() {
     super.update();
-
-    const a = this.x - Arena.playerX;
-    const b = this.y - Arena.playerY;
-
-    if (Math.sqrt((a * a) + (b * b)) <= 16 && !this.touched) {
-      this.touched = true;
-      player.addHealth(5);
-    }
   }
 
   render() {
@@ -59,18 +60,11 @@ class Popper extends BouncingEntity {
 
 class BouncingOrb extends BouncingEntity {
   constructor() {
-    super(20, -30, random(2) + 1, random(2) + 1);
+    super(20, -30, random(2) + 1, random(2) + 1, 16, -2);
   }
 
   update() {
     super.update();
-
-    const a = this.x - Arena.playerX;
-    const b = this.y - Arena.playerY;
-
-    if (Math.sqrt((a * a) + (b * b)) <= 16) {
-      player.subtractHealth(2);
-    }
   }
 
   render() {
@@ -79,9 +73,9 @@ class BouncingOrb extends BouncingEntity {
   }
 }
 
-class Particle extends MovingEntity {
+class Particle extends Entity {
   constructor(x, y, dirX, dirY) {
-    super(x, y, dirX, dirY);
+    super(x, y, dirX, dirY, 16, -2);
 
     this.lifetime = 0;
   }
@@ -90,13 +84,6 @@ class Particle extends MovingEntity {
     if (this.lifetime <= 100) {
       super.update();
       this.lifetime++;
-
-      const a = this.x - Arena.playerX;
-      const b = this.y - Arena.playerY;
-
-      if (Math.sqrt((a * a) + (b * b)) <= 16) {
-        player.subtractHealth(2);
-      }
     }
   }
 
@@ -108,9 +95,9 @@ class Particle extends MovingEntity {
   }
 }
 
-class Wall extends MovingEntity {
+class Wall extends Entity {
   constructor(x, y) {
-    super(x, y, 0, 2);
+    super(x, y, 0, 2, 16, -2);
 
     this.lifetime = 0;
   }
@@ -119,13 +106,6 @@ class Wall extends MovingEntity {
     if (this.lifetime <= 80) {
       super.update();
       this.lifetime++;
-
-      const a = this.x - Arena.playerX;
-      const b = this.y - Arena.playerY;
-
-      if (Math.sqrt((a * a) + (b * b)) <= 16) {
-        player.subtractHealth(2);
-      }
     }
   }
 
