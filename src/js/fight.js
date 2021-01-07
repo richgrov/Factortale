@@ -17,6 +17,10 @@ const ready = () => {
 
   const equation = new Equation(6, -16);
   const arena = new Arena(() => {
+    solveMenu.selection = 0;
+    findFactorMenu.selection = 0;
+    factorChooseMenu.selection = 0;
+
     box.grow(() => {
       if (step === 'FACTOR') {
         if (leftFactored) {
