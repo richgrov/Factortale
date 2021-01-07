@@ -26,23 +26,31 @@ const initEvents = () => {
         break;
 
       case 'ArrowLeft':
+        if (!leftHold) {
+          currentFrame.action(Action.LEFT);
+        }
         leftHold = true;
-        currentFrame.action(Action.LEFT);
         break;
 
       case 'ArrowRight':
+        if (!rightHold) {
+          currentFrame.action(Action.RIGHT);
+        }
         rightHold = true;
-        currentFrame.action(Action.RIGHT);
         break;
 
       case 'ArrowUp':
+        if (!upHold) {
+          currentFrame.action(Action.UP);
+        }
         upHold = true;
-        currentFrame.action(Action.UP);
         break;
 
       case 'ArrowDown':
+        if (!downHold) {
+          currentFrame.action(Action.DOWN);
+        }
         downHold = true;
-        currentFrame.action(Action.DOWN);
         break;
     }
   };
