@@ -24,8 +24,9 @@ class Popper {
     const a = this.x - Arena.playerX;
     const b = this.y - Arena.playerY;
 
-    if (Math.sqrt((a * a) + (b * b)) <= 16) {
+    if (Math.sqrt((a * a) + (b * b)) <= 16 && !this.touched) {
       this.touched = true;
+      player.addHealth(5);
     }
   }
 
