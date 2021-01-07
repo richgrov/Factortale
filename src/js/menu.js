@@ -69,7 +69,7 @@ class Menu {
     let hasBottomRight;
 
     if (this.page + 1 === this.pageCount) {
-      hasBottomLeft = this.items.length === (this.pageCount * 4) - 1;
+      hasBottomLeft = this.items.length >= (this.pageCount * 4) - 1;
       hasBottomRight = this.items.length === this.pageCount * 4;
     } else {
       // If we're not on the last page, it's guaranteed that bottom items exist.
