@@ -9,8 +9,9 @@ let leftFactored = false;
 let rightFactored = false;
 let answer;
 
-const ready = () => {
+const player = new Player();
 
+const ready = () => {
   const box = new Box();
   box.setText('Expression blocks the way!');
 
@@ -400,6 +401,8 @@ const ready = () => {
     },
     render: () => {
       ButtonManager.render(state === BattleState.CHOOSE);
+
+      player.render();
 
       ctx.fillStyle = 'white';
       ctx.textBaseline = 'top';
