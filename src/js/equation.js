@@ -1,4 +1,18 @@
 class Equation {
+  static random() {
+    // Random even number from 2 - 10
+    const c = (random(9) + 2) * 2;
+
+    // Get factors of c
+    const factors = findFactors(c);
+
+    // Pick a random pair of factors and make b
+    let index = random(factors.length);
+    const b = factors[index] + factors[factors.length - index - 1];
+
+    return new Equation(b, c);
+  }
+
   constructor(b, c) {
     this.tick = 0;
     this.y = 70;

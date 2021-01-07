@@ -16,7 +16,7 @@ const ready = () => {
   const box = new Box();
   box.setText('Expression blocks the way!');
 
-  const equation = new Equation(6, -16);
+  const equation = Equation.random();
   const arena = new Arena(() => {
     solveMenu.selection = 0;
     findFactorMenu.selection = 0;
