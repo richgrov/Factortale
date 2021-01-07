@@ -403,6 +403,7 @@ const ready = () => {
         case Action.LEFT:
           switch (state) {
             case BattleState.CHOOSE:
+              sounds.cycle.play();
               if (ButtonManager.selected === 0) {
                 ButtonManager.selected = 3;
               } else {
@@ -419,6 +420,7 @@ const ready = () => {
         case Action.RIGHT:
           switch (state) {
             case BattleState.CHOOSE:
+              sounds.cycle.play();
               if (ButtonManager.selected === 3) {
                 ButtonManager.selected = 0;
               } else {
