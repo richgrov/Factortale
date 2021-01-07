@@ -53,7 +53,6 @@ class Arena {
   }
 
   sendAttack(isPositive) {
-    this.entities = [];
 
     if (isPositive) {
       this.timeLeft = 150;
@@ -89,6 +88,7 @@ class Arena {
       if (this.timeLeft === -1) {
         Arena.playerX = 0;
         Arena.playerY = 0;
+        this.entities = [];
         
         this.callback();
       }
