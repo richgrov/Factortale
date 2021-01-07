@@ -325,6 +325,7 @@ const ready = () => {
       sounds.spare.play();
       box.setText('YOU WON!\n* You earned 0 XP and ' + random(10) + ' gold.');
     } else {
+      currentMenu = new Menu([]);
       state = BattleState.ATTACK;
       answerCorrect = false;
       attack.run();
