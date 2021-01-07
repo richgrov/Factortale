@@ -20,3 +20,15 @@ const shuffle = (array) => {
 
   return array;
 }
+
+const findFactors = (number) => {
+  const factors = [];
+
+  for (let i = 0; i <= Math.abs(number); i++) {
+    if (number % i === 0) {
+      factors.push(i);
+    }
+  }
+
+  return factors;
+};

@@ -318,12 +318,7 @@ const ready = () => {
     }
   });
 
-  const factors = [];
-  for (let i = 0; i <= Math.abs(equation.c); i++) {
-    if (equation.c % i === 0) {
-      factors.push(i);
-    }
-  }
+  const factors = findFactors(equation.c);
 
   const factorMenuItems = [];
   factors.forEach((factor, i) => {
