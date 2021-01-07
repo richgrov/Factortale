@@ -105,6 +105,7 @@ let currentFrame = {
     // Load assets
     textures = {
       title: loadTexture('title.png'),
+      background: loadTexture('background.png'),
       button: {
         solve: loadTexture('solve.png'),
         solveSel: loadTexture('solve-s.png'),

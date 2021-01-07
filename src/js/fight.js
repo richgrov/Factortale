@@ -440,6 +440,9 @@ const ready = () => {
       equation.update();
     },
     render: () => {
+      const background = textures.background;
+      ctx.drawImage(background, (WIDTH / 2) - (background.width / 2), 15);
+
       ButtonManager.render(state === BattleState.CHOOSE);
 
       player.render();
