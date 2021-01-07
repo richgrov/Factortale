@@ -385,10 +385,12 @@ const ready = () => {
         case Action.CONFIRM:
           switch (state) {
             case BattleState.CHOOSE:
+              sounds.confirm.play();
               ButtonManager.confirm();
               break;
 
             case BattleState.MENU:
+              sounds.confirm.play();
               currentMenu.confirm();
               break;
           }
