@@ -89,7 +89,7 @@ class Arena {
         Arena.playerX = 0;
         Arena.playerY = 0;
         this.entities = [];
-        
+
         this.callback();
       }
     }
