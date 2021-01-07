@@ -65,7 +65,7 @@ class Popper extends BouncingEntity {
 
 class BouncingOrb extends BouncingEntity {
   constructor() {
-    super(20, -30, random(2) + 1, random(2) + 1, 16, () => player.subtractHealth(2));
+    super(random(100) -50, -50, random(2) + 1, random(2) + 1, 16, () => player.subtractHealth(2));
   }
 
   update() {
