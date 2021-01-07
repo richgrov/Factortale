@@ -377,6 +377,8 @@ const ready = () => {
 
   let currentMenu;
 
+  sounds.music.play();
+
   currentFrame = {
     action: (action) => {
       switch (action) {
