@@ -79,7 +79,7 @@ class BouncingOrb extends BouncingEntity {
 
 class Particle extends Entity {
   constructor(x, y, dirX, dirY) {
-    super(x, y, dirX, dirY, 16, -2);
+    super(x, y, dirX, dirY, 16, -3);
 
     this.lifetime = 0;
   }
@@ -101,7 +101,7 @@ class Particle extends Entity {
 
 class Wall extends Entity {
   constructor(x, y) {
-    super(x, y, 0, 2, 16, -2);
+    super(x, y, 0, 2, 16, -4);
 
     this.lifetime = 0;
   }
@@ -137,13 +137,13 @@ class Arena {
   }
 
   sendAttack() {
-    this.timeLeft = 150;
+    this.timeLeft = 300;
 
     if (answerCorrect) {
       this.entities.push(new Popper());
     }
 
-    switch (2) {
+    switch (random(3)) {
       case 0:
         this.attack = 0;
         break;
