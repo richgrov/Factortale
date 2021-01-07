@@ -12,6 +12,7 @@ class Attack {
   }
 
   run() {
+    sounds.cast.play();
     this.frames = 0;
     this.attack = answerCorrect ? random(textures.damage.length - 1) + 1 : 0;
   }
