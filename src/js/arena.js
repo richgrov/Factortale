@@ -141,17 +141,6 @@ class Arena {
     }
   }
 
-  randomDistance() {
-    let distance = random(50) - 25;
-    if (distance > 0) {
-      distance += 70;
-    } else {
-      distance -= 70;
-    }
-
-    return distance;
-  }
-
   update() {
     if (leftHold) {
       if (Arena.playerX > -Arena.LIMIT) {
@@ -177,15 +166,9 @@ class Arena {
       this.timeLeft--;
 
       if (this.attack === 0) {
-        if (this.timeLeft % 20 === 0) {
-          const xPos = this.randomDistance();
-          const yPos = this.randomDistance();
-          const speed = 2;
-
-          this.entities.push(new Particle(xPos, yPos, speed, speed));
-          this.entities.push(new Particle(xPos, yPos, -speed, speed));
-          this.entities.push(new Particle(xPos, yPos, -speed, -speed));
-          this.entities.push(new Particle(xPos, yPos, speed, -speed));
+        if (this.timeLeft % 8 === 0) {
+          const negative = random(2) === 0 ? -1 : 1;
+          this.entities.push(new Particle(150 * negative, random(100) - 50, 3 * -negative, 0));
         }
       } else if (this.attack === 1) {
         if (this.timeLeft % 30 === 0) {
