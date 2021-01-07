@@ -87,6 +87,9 @@ class Arena {
       this.timeLeft--;
 
       if (this.timeLeft === -1) {
+        Arena.playerX = 0;
+        Arena.playerY = 0;
+        
         this.callback();
       }
     }
