@@ -277,6 +277,7 @@ const ready = () => {
     if (step === 'DONE') {
       equation.free = true;
       state = BattleState.INFO;
+      sounds.spare.play();
       box.setText('YOU WON!\n* You earned 0 XP and ' + (Math.floor(Math.random() * 10)) + ' gold.');
     } else {
       state = BattleState.ATTACK;

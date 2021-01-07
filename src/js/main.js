@@ -139,7 +139,8 @@ let currentFrame = {
         menu: loadAudio('type-menu.wav', 0.5)
       },
       damage: loadAudio('damage.wav'),
-      heal: loadAudio('heal.wav')
+      heal: loadAudio('heal.wav'),
+      spare: loadAudio('spare.wav')
     };
   };
 
