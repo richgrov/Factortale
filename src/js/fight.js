@@ -65,7 +65,7 @@ const ready = () => {
   const attack = new Attack(equation, () => {
     state = BattleState.BATTLE;
     box.shrink(() => {
-      arena.sendAttack(answerCorrect);
+      arena.sendAttack();
     });
   });
 

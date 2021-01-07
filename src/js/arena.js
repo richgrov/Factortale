@@ -91,18 +91,18 @@ class Arena {
     this.timeLeft = -1;
   }
 
-  sendAttack(isPositive) {
-    if (isPositive) {
+  sendAttack() {
+    if (answerCorrect) {
       this.timeLeft = 150;
       this.entities.push(new Popper());
-    } else {
-      switch (random(2)) {
-        case 0:
-        case 1:
-          this.timeLeft = 150;
-          this.attack = 1;
-          break;
-      }
+    }
+
+    switch (random(2)) {
+      case 0:
+      case 1:
+        this.timeLeft = 150;
+        this.attack = 1;
+        break;
     }
   }
 
