@@ -1,7 +1,20 @@
-class BouncingEntity {
-  constructor(dirX, dirY) {
+class MovingEntity {
+  constructor(x, y, dirX, dirY) {
+    this.x = x;
+    this.y = y;
     this.dirX = dirX;
     this.dirY = dirY;
+  }
+
+  update() {
+    this.x += this.dirX;
+    this.y += this.dirY;
+  }
+}
+
+class BouncingEntity extends MovingEntity {
+  constructor(x, y, dirX, dirY) {
+    super(x, y, dirX, dirY);
   }
 
   update() {
@@ -12,24 +25,20 @@ class BouncingEntity {
     if (this.y < -Arena.LIMIT || this.y > Arena.LIMIT) {
       this.dirY = -this.dirY;
     }
+
+    super.update();
   }
 }
 
 class Popper extends BouncingEntity {
   constructor() {
-    super(2, 2);
-
-    this.x = 20;
-    this.y = -30;
+    super(20, -30, 2, 2);
 
     this.touched = false;
   }
 
   update() {
     super.update();
-
-    this.x += this.dirX;
-    this.y += this.dirY;
 
     const a = this.x - Arena.playerX;
     const b = this.y - Arena.playerY;
@@ -50,17 +59,11 @@ class Popper extends BouncingEntity {
 
 class BouncingOrb extends BouncingEntity {
   constructor() {
-    super(random(2) + 1, random(2) + 1);
-
-    this.x = 20;
-    this.y = -30;
+    super(20, -30, random(2) + 1, random(2) + 1);
   }
 
   update() {
     super.update();
-
-    this.x += this.dirX;
-    this.y += this.dirY;
 
     const a = this.x - Arena.playerX;
     const b = this.y - Arena.playerY;
@@ -73,6 +76,35 @@ class BouncingOrb extends BouncingEntity {
   render() {
     const texture = textures.arena.i;
     ctx.drawImage(texture, this.x - (texture.width / 2) + 320, this.y - (texture.height / 2) + 300);
+  }
+}
+
+class Particle extends MovingEntity {
+  constructor(x, y, dirX, dirY) {
+    super(x, y, dirX, dirY);
+
+    this.lifetime = 0;
+  }
+
+  update() {
+    if (this.lifetime <= 100) {
+      super.update();
+      this.lifetime++;
+
+      const a = this.x - Arena.playerX;
+      const b = this.y - Arena.playerY;
+
+      if (Math.sqrt((a * a) + (b * b)) <= 16) {
+        player.subtractHealth(2);
+      }
+    }
+  }
+
+  render() {
+    if (this.lifetime < 100) {
+      const texture = textures.arena.particle;
+      ctx.drawImage(texture, this.x - (texture.width / 2) + 320, this.y - (texture.height / 2) + 300);
+    }
   }
 }
 
@@ -92,18 +124,32 @@ class Arena {
   }
 
   sendAttack() {
+    this.timeLeft = 150;
+
     if (answerCorrect) {
-      this.timeLeft = 150;
       this.entities.push(new Popper());
     }
 
     switch (random(2)) {
       case 0:
+        this.attack = 0;
+        break;
+
       case 1:
-        this.timeLeft = 150;
         this.attack = 1;
         break;
     }
+  }
+
+  randomDistance() {
+    let distance = random(50) - 25;
+    if (distance > 0) {
+      distance += 70;
+    } else {
+      distance -= 70;
+    }
+
+    return distance;
   }
 
   update() {
@@ -130,8 +176,21 @@ class Arena {
     if (this.timeLeft > -1) {
       this.timeLeft--;
 
-      if (this.attack === 1 && this.timeLeft % 30 === 0) {
-        this.entities.push(new BouncingOrb());
+      if (this.attack === 0) {
+        if (this.timeLeft % 20 === 0) {
+          const xPos = this.randomDistance();
+          const yPos = this.randomDistance();
+          const speed = 2;
+
+          this.entities.push(new Particle(xPos, yPos, speed, speed));
+          this.entities.push(new Particle(xPos, yPos, -speed, speed));
+          this.entities.push(new Particle(xPos, yPos, -speed, -speed));
+          this.entities.push(new Particle(xPos, yPos, speed, -speed));
+        }
+      } else if (this.attack === 1) {
+        if (this.timeLeft % 30 === 0) {
+          this.entities.push(new BouncingOrb());
+        }
       }
 
       if (this.timeLeft === -1) {
