@@ -4,6 +4,7 @@ class BattleState {
   }
 }
 
+let answerCorrect = false;
 let step = 'FIND_FACTORS';
 let leftFactored = false;
 let rightFactored = false;
@@ -64,7 +65,7 @@ const ready = () => {
   const attack = new Attack(equation, () => {
     state = BattleState.BATTLE;
     box.shrink(() => {
-      arena.sendAttack(true);
+      arena.sendAttack(answerCorrect);
     });
   });
 
@@ -105,28 +106,32 @@ const ready = () => {
             step = 'FINAL';
           }
 
-          attack.run(random(textures.damage.length - 1) + 1);
+          answerCorrect = true;
+          attack.run();
         }
       },
       {
         name: 'Factor out ' + equation.correctFactors[0],
         callback: () => {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         }
       },
       {
         name: 'Factor out x\u00B2',
         callback: () => {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         }
       },
       {
         name: 'Factor out ' + -equation.correctFactors[0],
         callback: () => {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         }
       }
     ]);
@@ -145,28 +150,32 @@ const ready = () => {
             step = 'FINAL';
           }
 
-          attack.run(random(textures.damage.length - 1) + 1);
+          answerCorrect = true;
+          attack.run();
         }
       },
       {
         name: 'Factor out x',
         callback: () => {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         }
       },
       {
         name: 'Factor out ' + -equation.correctFactors[1],
         callback: () => {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         }
       },
       {
         name: 'Factor out ' + equation.originalC,
         callback: () => {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         }
       }
     ]);
@@ -180,7 +189,8 @@ const ready = () => {
       callback: () => {
         if (leftFactored) {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         } else {
           currentMenu = leftFactorMenu();
         }
@@ -191,7 +201,8 @@ const ready = () => {
       callback: () => {
         if (rightFactored) {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         } else {
           currentMenu = rightFactorMenu();
         }
@@ -213,28 +224,32 @@ const ready = () => {
         name: answer,
         callback: () => {
           step = 'DONE';
-          attack.run(random(textures.damage.length - 1) + 1);
+          answerCorrect = true;
+          attack.run();
         }
       },
       {
         name: '(x' + -secondFactor + ')(x' + firstFactor + ')',
         callback: () => {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         }
       },
       {
         name: '(x' + secondFactor + ')(x' + -firstFactor + ')',
         callback: () => {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         }
       },
       {
         name: '(x' + -secondFactor + ')(x' + -firstFactor + ')',
         callback: () => {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         }
       }
     ], () => currentMenu = solveMenu);
@@ -248,7 +263,8 @@ const ready = () => {
           currentMenu = findFactorMenu;
         } else {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         }
       }
     },
@@ -259,7 +275,8 @@ const ready = () => {
           currentMenu = factorChooseMenu;
         } else {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         }
       }
     },
@@ -270,7 +287,8 @@ const ready = () => {
           currentMenu = finalGroupsMenu();
         } else {
           state = BattleState.ATTACK;
-          attack.run(0);
+          answerCorrect = false;
+          attack.run();
         }
       }
     }
@@ -308,7 +326,8 @@ const ready = () => {
       box.setText('YOU WON!\n* You earned 0 XP and ' + random(10) + ' gold.');
     } else {
       state = BattleState.ATTACK;
-      attack.run(0);
+      answerCorrect = false;
+      attack.run();
     }
   });
 
@@ -333,13 +352,15 @@ const ready = () => {
     let attackCallback;
     if (firstFactor + secondFactor === parseInt(equation.b)) {
       attackCallback = () => {
-        attack.run(random(textures.damage.length - 1) + 1);
+        answerCorrect = true;
+        attack.run();
         step = 'FACTOR';
       };
       equation.correctFactors = [firstFactor, secondFactor];
     } else {
       attackCallback = () => {
-        attack.run(0);
+        answerCorrect = false;
+        attack.run();
       };
     }
 

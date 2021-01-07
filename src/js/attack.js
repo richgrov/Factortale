@@ -11,9 +11,9 @@ class Attack {
     this.state = true;
   }
 
-  run(attack) {
+  run() {
     this.frames = 0;
-    this.attack = attack;
+    this.attack = answerCorrect ? random(textures.damage.length - 1) + 1 : 0;
   }
 
   factorA() {
