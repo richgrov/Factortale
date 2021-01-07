@@ -19,7 +19,7 @@ const ready = () => {
     // While there remain elements to shuffle...
     while (currentIndex !== 0) {
       // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
+      randomIndex = random(currentIndex);
       currentIndex -= 1;
 
       // And swap it with the current element.
@@ -105,7 +105,7 @@ const ready = () => {
             step = 'FINAL';
           }
 
-          attack.run(Math.floor(Math.random() * (textures.damage.length - 1)) + 1);
+          attack.run(random(textures.damage.length - 1) + 1);
         }
       },
       {
@@ -145,7 +145,7 @@ const ready = () => {
             step = 'FINAL';
           }
 
-          attack.run(Math.floor(Math.random() * (textures.damage.length - 1)) + 1);
+          attack.run(random(textures.damage.length - 1) + 1);
         }
       },
       {
@@ -213,7 +213,7 @@ const ready = () => {
         name: answer,
         callback: () => {
           step = 'DONE';
-          attack.run(Math.floor(Math.random() * (textures.damage.length - 1)) + 1);
+          attack.run(random(textures.damage.length - 1) + 1);
         }
       },
       {
@@ -305,7 +305,7 @@ const ready = () => {
       equation.free = true;
       state = BattleState.INFO;
       sounds.spare.play();
-      box.setText('YOU WON!\n* You earned 0 XP and ' + (Math.floor(Math.random() * 10)) + ' gold.');
+      box.setText('YOU WON!\n* You earned 0 XP and ' + random(10) + ' gold.');
     } else {
       state = BattleState.ATTACK;
       attack.run(0);
@@ -333,7 +333,7 @@ const ready = () => {
     let attackCallback;
     if (firstFactor + secondFactor === parseInt(equation.b)) {
       attackCallback = () => {
-        attack.run(Math.floor(Math.random() * (textures.damage.length - 1)) + 1);
+        attack.run(random(textures.damage.length - 1) + 1);
         step = 'FACTOR';
       };
       equation.correctFactors = [firstFactor, secondFactor];
