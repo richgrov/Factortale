@@ -6,6 +6,8 @@ class ButtonManager {
   static buttons = [];
 
   static confirm() {
+    sounds.confirm.play();
+
     ButtonManager.buttons.forEach((button) => {
       if (button.id === ButtonManager.selected) {
         button.onClick();
