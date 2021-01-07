@@ -378,6 +378,9 @@ const ready = () => {
   let currentMenu;
 
   sounds.music.play();
+  setInterval(() => {
+    sounds.music.cloneNode().play();
+  }, 55000);
 
   currentFrame = {
     action: (action) => {
