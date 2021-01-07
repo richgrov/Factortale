@@ -110,6 +110,7 @@ class Menu {
   }
 
   render() {
+    ctx.fillStyle = 'white';
     ctx.font = '30px Determination Mono';
 
     // Draw the heart

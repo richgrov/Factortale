@@ -1,4 +1,7 @@
 class Attack {
+  static BAR_WIDTH = 200;
+  static MAX_BAR = 200;
+
   constructor(equation, done) {
     this.equation = equation;
     this.done = done;
@@ -9,6 +12,7 @@ class Attack {
     this.tick = 0;
     this.y = 0;
     this.state = true;
+    this.bar = Attack.MAX_BAR;
   }
 
   run() {
@@ -76,6 +80,8 @@ class Attack {
         this.tick = 0;
         this.jump = 0;
         this.y = 0;
+      } else if (this.tick <= 33) {
+        this.bar--;
       }
     }
   }
@@ -93,7 +99,19 @@ class Attack {
       }
     } else {
       const img = textures.damage[this.attack];
-      ctx.drawImage(img, (WIDTH / 2) - (img.width / 2), 70 - this.y);
+      ctx.drawImage(img, (WIDTH / 2) - (img.width / 2), 30 - this.y);
+
+      if (this.attack !== 0) {
+        ctx.strokeStyle = 'black';
+        ctx.strokeWidth = 0.5;
+        ctx.strokeRect((WIDTH / 2) - ((Attack.BAR_WIDTH + 2) / 2), 79, Attack.BAR_WIDTH + 2, 12);
+
+        ctx.fillStyle = '#3f403f';
+        ctx.fillRect((WIDTH / 2) - (Attack.BAR_WIDTH / 2), 80, Attack.BAR_WIDTH, 10);
+
+        ctx.fillStyle = '#00d700';
+        ctx.fillRect((WIDTH / 2) - (Attack.BAR_WIDTH / 2), 80, Attack.BAR_WIDTH * (this.bar / Attack.MAX_BAR), 10);
+      }
     }
   }
 }
