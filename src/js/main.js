@@ -122,7 +122,8 @@ let currentFrame = {
       arena: {
         popper: loadTexture('popper.png'),
         i: loadTexture('i.png'),
-        particle: loadTexture('particle.png')
+        particle: loadTexture('particle.png'),
+        wall: loadTexture('wall.png')
       }
     };
 
