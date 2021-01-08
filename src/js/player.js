@@ -75,6 +75,7 @@ class Player {
                 if (typeDelay === 0) {
                   renderText += text[currentText][renderText.length];
                   typeDelay = 3;
+                  sounds.type.gameOver.cloneNode().play();
                 } else {
                   typeDelay--;
                 }
