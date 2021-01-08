@@ -203,7 +203,7 @@ const ready = () => {
         }
       },
       {
-        name: '(x' + -secondFactor + ')(x' + firstFactor + ')',
+        name: '(x' + formatPlus(-secondFactor) + ')(x' + firstFactor + ')',
         callback: () => {
           state = 'ATTACK';
           answerCorrect = false;
@@ -219,7 +219,7 @@ const ready = () => {
         }
       },
       {
-        name: '(x' + -secondFactor + ')(x' + -firstFactor + ')',
+        name: '(x' + formatPlus(-secondFactor) + ')(x' + -firstFactor + ')',
         callback: () => {
           state = 'ATTACK';
           answerCorrect = false;
