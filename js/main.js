@@ -24,7 +24,15 @@ let currentFrame = {
     ctx.textAlign = 'center';
 
     if (isReady) {
-      ctx.fillText('Press [ENTER] to continue...', WIDTH / 2, HEIGHT / 2);
+      ctx.fillText('Press confirm to begin game', WIDTH / 2, 300);
+
+      ctx.fillStyle = 'gray';
+      ctx.textAlign = 'left';
+      ctx.fillText('--- Instruction --', 150, 100);
+      ctx.fillText('[Z or ENTER] - Confirm', 150, 130);
+      ctx.fillText('[X or SHIFT] - Cancel', 150, 160);
+      ctx.fillText('[ARROW KEYS] - Move', 150, 190);
+      ctx.fillText('When HP is 0, you lose.', 150, 220);
     } else {
       // Show simple loading text until assets are ready.
       ctx.fillText('Loading...', WIDTH / 2, HEIGHT / 2);
