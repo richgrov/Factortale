@@ -518,7 +518,7 @@ const ready = () => {
     },
     render: () => {
       const background = textures.background;
-      ctx.drawImage(background, (WIDTH / 2) - (background.width / 2), 15);
+      ctx.drawImage(background, centerWidth(background.width), 15);
 
       buttonManager.render(state === 'CHOOSE');
 

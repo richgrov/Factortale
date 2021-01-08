@@ -36,3 +36,7 @@ const findFactors = (number) => {
 const formatPlus = (number) => {
   return number > 0 ? '+' + number : number;
 }
+
+const centerWidth = (objWidth) => {
+  return (WIDTH / 2) - (objWidth / 2);
+};

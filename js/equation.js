@@ -88,6 +88,6 @@ class Equation {
   }
 
   center(x) {
-    return ((WIDTH / 2) - (x / 2)) + this.x;
+    return centerWidth(x) + this.x;
   }
 }

@@ -109,13 +109,13 @@ class Attack {
       if (this.attack !== 'MISS') {
         ctx.strokeStyle = 'black';
         ctx.strokeWidth = 0.5;
-        ctx.strokeRect((WIDTH / 2) - ((Attack.BAR_WIDTH + 2) / 2), 79, Attack.BAR_WIDTH + 2, 12);
+        ctx.strokeRect(centerWidth(Attack.BAR_WIDTH + 2), 79, Attack.BAR_WIDTH + 2, 12);
 
         ctx.fillStyle = '#3f403f';
-        ctx.fillRect((WIDTH / 2) - (Attack.BAR_WIDTH / 2), 80, Attack.BAR_WIDTH, 10);
+        ctx.fillRect(centerWidth(Attack.BAR_WIDTH), 80, Attack.BAR_WIDTH, 10);
 
         ctx.fillStyle = '#00d700';
-        ctx.fillRect((WIDTH / 2) - (Attack.BAR_WIDTH / 2), 80, Attack.BAR_WIDTH * (this.bar / Attack.MAX_BAR), 10);
+        ctx.fillRect(centerWidth(Attack.BAR_WIDTH), 80, Attack.BAR_WIDTH * (this.bar / Attack.MAX_BAR), 10);
       }
     }
   }

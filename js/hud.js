@@ -138,7 +138,7 @@ class HUD {
             } else {
               ctx.globalAlpha = alpha;
               const texture = textures.gameOver;
-              ctx.drawImage(texture, (WIDTH / 2) - (texture.width / 2), 50);
+              ctx.drawImage(texture, centerWidth(texture.width), 50);
 
               if (ticks > TIME_TEXT) {
                 ctx.font = '30px Determination Mono';
