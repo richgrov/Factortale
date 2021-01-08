@@ -185,11 +185,8 @@ const ready = () => {
   ], () => currentMenu = solveMenu);
 
   const finalGroupsMenu = () => {
-    let firstFactor = equation.correctFactors[0];
-    let secondFactor = equation.correctFactors[1];
-
-    firstFactor = firstFactor > 0 ? '+' + firstFactor : firstFactor;
-    secondFactor = secondFactor > 0 ? '+' + secondFactor : secondFactor;
+    let firstFactor = formatPlus(equation.correctFactors[0]);
+    let secondFactor = formatPlus(equation.correctFactors[1]);
 
     answer = '(x' + secondFactor + ')(x' + firstFactor + ')';
 
