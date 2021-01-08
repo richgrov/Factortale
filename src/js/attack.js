@@ -48,7 +48,7 @@ class Attack {
 
                 this.equation.a = '(' + this.equation.a + (factor1 > 0 ? '+' + factor1 : factor1) + 'x)';
                 this.equation.b = '';
-                this.equation.c = '(' + (factor2 > 0 ? '+' + factor2 : factor2) + 'x' + this.equation.c + ')';
+                this.equation.c = '(' + factor2 + 'x' + this.equation.c + ')';
               }
             } else if (step === 'FINAL') {
               this.factorA();
