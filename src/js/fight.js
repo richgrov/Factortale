@@ -8,7 +8,7 @@ let leftFactored;
 let rightFactored;
 let answer;
 
-let player;
+let hud;
 let buttonManager;
 
 let musicInterval;
@@ -22,7 +22,7 @@ const ready = () => {
   leftFactored = false;
   rightFactored = false;
 
-  player = new Player();
+  hud = new HUD();
   buttonManager = new ButtonManager();
 
   const box = new Box();
@@ -328,7 +328,7 @@ const ready = () => {
         name: item.name,
         callback: () => {
           items.splice(i, 1);
-          player.addHealth(item.health);
+          hud.addHealth(item.health);
           state = 'INFO';
 
           nextState = () => {
@@ -504,7 +504,7 @@ const ready = () => {
       switch (state) {
         case 'BATTLE':
           arena.update();
-          player.update();
+          hud.update();
           break;
       }
 
@@ -518,7 +518,7 @@ const ready = () => {
 
       buttonManager.render(state === 'CHOOSE');
 
-      player.render();
+      hud.render();
 
       ctx.fillStyle = 'white';
       ctx.textBaseline = 'top';

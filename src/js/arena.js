@@ -43,7 +43,7 @@ class Popper extends BouncingEntity {
   constructor() {
     super(20, -30, 2, 2, 16, () => {
       if (!this.touched) {
-        player.addHealth(5);
+        hud.addHealth(5);
         this.touched = true;
       }
     });
@@ -65,7 +65,7 @@ class Popper extends BouncingEntity {
 
 class BouncingOrb extends BouncingEntity {
   constructor() {
-    super(random(100) -50, -50, random(2) + 1, random(2) + 1, 16, () => player.subtractHealth(2));
+    super(random(100) -50, -50, random(2) + 1, random(2) + 1, 16, () => hud.subtractHealth(2));
   }
 
   update() {
@@ -80,7 +80,7 @@ class BouncingOrb extends BouncingEntity {
 
 class Particle extends Entity {
   constructor(x, y, dirX, dirY) {
-    super(x, y, dirX, dirY, 16, () => player.subtractHealth(3));
+    super(x, y, dirX, dirY, 16, () => hud.subtractHealth(3));
 
     this.lifetime = 0;
   }
@@ -104,7 +104,7 @@ class Wall extends Entity {
   static MAX = 77;
 
   constructor(x, y) {
-    super(x, y, 0, 2, 16, () => player.subtractHealth(4));
+    super(x, y, 0, 2, 16, () => hud.subtractHealth(4));
 
     this.lifetime = 0;
   }
@@ -212,7 +212,7 @@ class Arena {
         Arena.playerY = 0;
         this.entities = [];
 
-        player.hurtTicks = 0;
+        hud.hurtTicks = 0;
 
         this.callback();
       }
@@ -222,7 +222,7 @@ class Arena {
   }
 
   render() {
-    if (player.hurtTicks > 0 && player.hurtTicks % 5 <= 1) {
+    if (hud.hurtTicks > 0 && hud.hurtTicks % 5 <= 1) {
       ctx.globalAlpha = 0.7;
     }
 

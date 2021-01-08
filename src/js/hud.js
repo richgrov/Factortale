@@ -1,4 +1,4 @@
-class Player {
+class HUD {
   static BAR_X = 270;
   static SIZE = 25;
 
@@ -161,14 +161,14 @@ class Player {
 
   render() {
     ctx.fillStyle = 'white';
-    ctx.font = Player.SIZE + 'px Mars Needs Cunnilingus';
+    ctx.font = HUD.SIZE + 'px Mars Needs Cunnilingus';
     ctx.fillText('GREEN  LV 1', 20 , 370);
 
     ctx.fillStyle = 'red';
-    ctx.fillRect(Player.BAR_X, 372, 40 , 20);
+    ctx.fillRect(HUD.BAR_X, 372, 40 , 20);
 
     ctx.fillStyle = 'yellow';
-    ctx.fillRect(Player.BAR_X, 372, 40 * (this.health / this.maxHealth), 20);
+    ctx.fillRect(HUD.BAR_X, 372, 40 * (this.health / this.maxHealth), 20);
 
     ctx.fillStyle = 'white';
     ctx.fillText(this.health + ' / ' + this.maxHealth, 320, 370);
