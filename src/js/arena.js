@@ -212,6 +212,8 @@ class Arena {
         Arena.playerY = 0;
         this.entities = [];
 
+        player.hurtTicks = 0;
+
         this.callback();
       }
     }
