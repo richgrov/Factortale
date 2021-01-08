@@ -1,4 +1,5 @@
 let state;
+let nextState;
 
 let answerCorrect = false;
 let step = 'FIND_FACTORS';
@@ -276,8 +277,64 @@ const ready = () => {
     }
   });
 
-  ButtonManager.makeButton(346, textures.button.item, textures.button.itemSel, () => {
+  const items = [
+    {
+      name: 'Green item',
+      health: 20,
+      info: 'ALWAYS CHOOSE GREEN! You\'re health\nwas maxed out.'
+    },
+    {
+      name: 'Red item',
+      health: 1,
+      info: 'Imagine choosing red... +1 health\nfor you.'
+    },
+    {
+      name: 'Party popper',
+      health: 4,
+      info: 'Assuming you got the answer wrong,\ngreat job! Confetti for you.\n(+4 Health)'
+    },
+    {
+      name: 'Plug-Chug',
+      health: 4,
+      info: 'Thanks for your contribution to the\npluggity-chuggity machine. (+4 Health)'
+    },
+    {
+      name: 'Record Button',
+      health: 4,
+      info: 'You must never forget to record.\nThis shall remind you. (+4 Health)'
+    },
+    {
+      name: '81\u2122 Cookies',
+      health: 4,
+      info: 'richard81cookiepacman@wood.com/M\nthanks you. (+4 Health)'
+    }
+  ];
 
+  ButtonManager.makeButton(346, textures.button.item, textures.button.itemSel, () => {
+    const array = [];
+
+    items.forEach((item, i) => {
+      array.push({
+        name: item.name,
+        callback: () => {
+          items.splice(i, 1);
+          player.addHealth(item.health);
+          state = 'INFO';
+
+          nextState = () => {
+            state = 'BATTLE';
+
+            box.shrink(() => {
+              arena.sendAttack();
+            });
+          };
+          box.setText(item.info);
+        }
+      });
+    });
+
+    currentMenu = new Menu(array);
+    state = 'MENU';
   });
 
   ButtonManager.makeButton(510, textures.button.done, textures.button.doneSel, () => {
@@ -358,6 +415,10 @@ const ready = () => {
             case 'MENU':
               sounds.confirm.play();
               currentMenu.confirm();
+              break;
+
+            case 'INFO':
+              nextState();
               break;
           }
           break;
