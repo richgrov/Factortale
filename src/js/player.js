@@ -23,6 +23,7 @@ class Player {
         musicAllowed = false;
         sounds.music.pause();
         sounds.music.currentTime = 0;
+        clearInterval(musicInterval);
 
         let ticks = 0;
         const shards = [];
