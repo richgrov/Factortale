@@ -360,6 +360,9 @@ const ready = () => {
       clearInterval(musicInterval);
       sounds.spare.play();
       box.setText('YOU WON!\n* You earned 0 XP and ' + random(10) + ' gold.');
+      nextState = () => {
+        end();
+      }
     } else {
       currentMenu = new Menu([]);
       state = 'ATTACK';
