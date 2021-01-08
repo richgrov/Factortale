@@ -29,6 +29,7 @@ class Player {
         const shards = [];
         let alpha = 0
 
+        let typeDelay = 0;
         let currentText = 0;
         let renderText = '';
         const text = [
@@ -71,7 +72,12 @@ class Player {
               alpha += 0.07;
 
               if (ticks > 250 && renderText.length !== text[currentText].length) {
-                renderText += text[currentText][renderText.length];
+                if (typeDelay === 0) {
+                  renderText += text[currentText][renderText.length];
+                  typeDelay = 3;
+                } else {
+                  typeDelay--;
+                }
               }
             }
           },
