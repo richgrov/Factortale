@@ -6,15 +6,29 @@ let sounds = {};
 
 let ctx;
 
+let isReady = false;
+let loop;
+
 let currentFrame = {
   tick: () => {},
-  action: () => {},
+  action: (action) => {
+    if (action === Action.CONFIRM) {
+      if (isReady) {
+        ready();
+      }
+    }
+  },
   render: () => {
-    // Show simple loading text until assets are ready.
     ctx.fillStyle = 'white';
     ctx.font = '30px Determination Mono';
     ctx.textAlign = 'center';
-    ctx.fillText('Loading...', WIDTH / 2, HEIGHT / 2);
+
+    if (isReady) {
+      ctx.fillText('Press [ENTER] to continue...', WIDTH / 2, HEIGHT / 2);
+    } else {
+      // Show simple loading text until assets are ready.
+      ctx.fillText('Loading...', WIDTH / 2, HEIGHT / 2);
+    }
   }
 };
 
@@ -61,8 +75,7 @@ let currentFrame = {
     image.onload = () => {
       textureQueue--;
       if (textureQueue === 0) {
-        ready();
-        window.requestAnimationFrame(loop);
+        isReady = true;
       }
     };
 
@@ -154,11 +167,13 @@ let currentFrame = {
         burst: loadAudio('brake-burst.wav')
       }
     };
+
+    window.requestAnimationFrame(loop);
   };
 
   let time = Date.now();
   let elapsed = 0;
-  const loop = () => {
+  loop = () => {
     let delta = Date.now() - time;
     time = Date.now();
 
