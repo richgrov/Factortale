@@ -1,5 +1,6 @@
 let state;
 let nextState;
+let musicAllowed = true;
 
 let answerCorrect = false;
 let step = 'FIND_FACTORS';
@@ -340,6 +341,7 @@ const ready = () => {
   ButtonManager.makeButton(510, textures.button.done, textures.button.doneSel, () => {
     if (step === 'DONE') {
       equation.free = true;
+      musicAllowed = false;
       state = 'INFO';
       sounds.music.pause();
       sounds.spare.play();
@@ -395,7 +397,7 @@ const ready = () => {
 
   sounds.music.play();
   setInterval(() => {
-    if (!equation.free) {
+    if (musicAllowed) {
       sounds.music.pause();
       sounds.music.currentTime = 0;
       sounds.music.play();

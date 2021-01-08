@@ -18,6 +18,8 @@ class Player {
       this.health = Math.max(this.health - amount, 0);
       sounds.hurt.play();
       this.hurtTicks = 33;
+        musicAllowed = false;
+        sounds.music.pause();
     }
   }
 
