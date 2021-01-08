@@ -507,10 +507,13 @@ const ready = () => {
           arena.update();
           hud.update();
           break;
+
+        case 'ATTACK':
+          attack.update();
+          break;
       }
 
       box.update();
-      attack.update();
       equation.update();
     },
     render: () => {
@@ -526,11 +529,11 @@ const ready = () => {
 
       box.render();
       equation.render();
-      attack.render();
 
       switch (state) {
         case 'MENU':
         case 'ATTACK':
+          attack.render();
           currentMenu.render();
           break;
 
