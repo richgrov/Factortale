@@ -88,7 +88,6 @@ const ready = () => {
       {
         name: 'Factor out ' + equation.correctFactors[0],
         callback: () => {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -96,7 +95,6 @@ const ready = () => {
       {
         name: 'Factor out x\u00B2',
         callback: () => {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -104,7 +102,6 @@ const ready = () => {
       {
         name: 'Factor out ' + -equation.correctFactors[0],
         callback: () => {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -132,7 +129,6 @@ const ready = () => {
       {
         name: 'Factor out x',
         callback: () => {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -140,7 +136,6 @@ const ready = () => {
       {
         name: 'Factor out ' + -equation.correctFactors[1],
         callback: () => {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -148,7 +143,6 @@ const ready = () => {
       {
         name: 'Factor out ' + equation.originalC,
         callback: () => {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -163,7 +157,6 @@ const ready = () => {
       name: 'Left',
       callback: () => {
         if (leftFactored) {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         } else {
@@ -175,7 +168,6 @@ const ready = () => {
       name: 'Right',
       callback: () => {
         if (rightFactored) {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         } else {
@@ -203,7 +195,6 @@ const ready = () => {
       {
         name: '(x' + formatPlus(-secondFactor) + ')(x' + firstFactor + ')',
         callback: () => {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -211,7 +202,6 @@ const ready = () => {
       {
         name: '(x' + secondFactor + ')(x' + -firstFactor + ')',
         callback: () => {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -219,7 +209,6 @@ const ready = () => {
       {
         name: '(x' + formatPlus(-secondFactor) + ')(x' + -firstFactor + ')',
         callback: () => {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -236,7 +225,6 @@ const ready = () => {
         if (step === 'FIND_FACTORS') {
           currentMenu = findFactorMenu;
         } else {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -248,7 +236,6 @@ const ready = () => {
         if (step === 'FACTOR') {
           currentMenu = factorChooseMenu;
         } else {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -260,7 +247,6 @@ const ready = () => {
         if (step === 'FINAL') {
           currentMenu = finalGroupsMenu();
         } else {
-          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -363,7 +349,6 @@ const ready = () => {
       }
     } else {
       currentMenu = new Menu([]);
-      state = 'ATTACK';
       answerCorrect = false;
       attack.run();
     }
@@ -400,7 +385,6 @@ const ready = () => {
     factorMenuItems.push({
       name: factor + ' & ' + secondFactor,
       callback: () => {
-        state = 'ATTACK';
         attackCallback();
       }
     });

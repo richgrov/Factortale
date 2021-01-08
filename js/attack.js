@@ -16,6 +16,7 @@ class Attack {
   }
 
   run() {
+    state = 'ATTACK';
     sounds.cast.play();
     this.frames = 0;
     this.attack = answerCorrect ? random(7) + 33 : 'MISS';
