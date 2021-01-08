@@ -148,7 +148,11 @@ let currentFrame = {
       damage: loadAudio('damage.wav'),
       heal: loadAudio('heal.wav'),
       hurt: loadAudio('hurt.wav'),
-      spare: loadAudio('spare.wav')
+      spare: loadAudio('spare.wav'),
+      brake: {
+        split: loadAudio('brake-split.wav'),
+        burst: loadAudio('brake-burst.wav')
+      }
     };
   };
 

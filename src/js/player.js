@@ -39,6 +39,8 @@ class Player {
 
         let interval;
         let musicStarted = false;
+        let splitPlayed = false;
+        let burstPlayed = false;
 
         const playMusic = () => {
           musicStarted = true;
@@ -113,9 +115,17 @@ class Player {
             } else if (ticks < 60) {
               const brake = textures.brake;
               ctx.drawImage(brake, Arena.playerX - (brake.width / 2) + 320, Arena.playerY - (brake.width / 2) + 300);
-            }
 
-            if (ticks < 130) {
+              if (!splitPlayed) {
+                sounds.brake.split.play();
+                splitPlayed = true;
+              }
+            } else if (ticks < 130) {
+              if (!burstPlayed) {
+                sounds.brake.burst.play();
+                burstPlayed = true;
+              }
+
               ctx.strokeStyle = 'red';
 
               shards.forEach((shard) => {
