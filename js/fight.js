@@ -35,7 +35,7 @@ const ready = () => {
     factorChooseMenu.selection = 0;
 
     state = 'CHOOSE';
-    
+
     box.grow(() => {
       if (step === 'FACTOR') {
         if (leftFactored) {
