@@ -277,7 +277,7 @@ const ready = () => {
         break;
 
       case 'FACTOR':
-        box.setText('Factor out the items in the left and\nright parenthesis.');
+        box.setText('Factor out the items in the left\nand right groups.');
         break;
 
       case 'FINAL':
