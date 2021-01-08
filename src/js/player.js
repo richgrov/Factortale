@@ -37,9 +37,11 @@ class Player {
           'You prob just died on purpose...'
         ];
 
+        const TIME_TEXT = 230;
+
         currentFrame = {
           action: (action) => {
-            if (ticks > 250 && action === Action.CONFIRM) {
+            if (ticks > TIME_TEXT && action === Action.CONFIRM) {
               renderText = '';
               currentText++;
               if (currentText === text.length) {
@@ -71,10 +73,10 @@ class Player {
             } else {
               alpha += 0.07;
 
-              if (ticks > 250 && renderText.length !== text[currentText].length) {
+              if (ticks > TIME_TEXT && renderText.length !== text[currentText].length) {
                 if (typeDelay === 0) {
                   renderText += text[currentText][renderText.length];
-                  typeDelay = 3;
+                  typeDelay = 2;
                   sounds.type.gameOver.cloneNode().play();
                 } else {
                   typeDelay--;
@@ -104,7 +106,7 @@ class Player {
               const texture = textures.gameOver;
               ctx.drawImage(texture, (WIDTH / 2) - (texture.width / 2), 50);
 
-              if (ticks > 250) {
+              if (ticks > TIME_TEXT) {
                 ctx.font = '30px Determination Mono';
                 ctx.globalAlpha = 1;
                 ctx.fillStyle = 'white';
