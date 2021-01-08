@@ -1,14 +1,27 @@
 class Equation {
   static random() {
     // Random even number from 2 - 10
-    const c = (random(9) + 2) * 2;
+    let c = (random(9) + 2) * 2;
+
+    if (random(2) === 0) {
+      c = -c;
+    }
 
     // Get factors of c
     const factors = findFactors(c);
 
     // Pick a random pair of factors (excluding the first and last) and make b
     let index = random(factors.length - 2) + 1;
-    const b = factors[index] + factors[factors.length - index - 1];
+
+    const factor2 = factors[factors.length - index - 1];
+
+    const b = factors[index] + (c < 0 ? -factor2 : factor2);
+
+    // Formatting can't handle -1x, 0x, 1x, due to no leading number
+    // Bad way of doing things, but works
+    if (b > -2 && b < 2) {
+      return Equation.random();
+    }
 
     return new Equation(b, c);
   }
