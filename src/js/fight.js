@@ -354,6 +354,7 @@ const ready = () => {
       musicAllowed = false;
       state = 'INFO';
       sounds.music.pause();
+      sounds.music.currentTime = 0;
       sounds.spare.play();
       box.setText('YOU WON!\n* You earned 0 XP and ' + random(10) + ' gold.');
     } else {
@@ -406,11 +407,13 @@ const ready = () => {
   let currentMenu;
 
   sounds.music.play();
-  setInterval(() => {
+  const interval = setInterval(() => {
     if (musicAllowed) {
       sounds.music.pause();
       sounds.music.currentTime = 0;
       sounds.music.play();
+    } else {
+      clearInterval(interval);
     }
   }, 55000);
 

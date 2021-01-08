@@ -22,6 +22,7 @@ class Player {
       if (this.health === 0) {
         musicAllowed = false;
         sounds.music.pause();
+        sounds.music.currentTime = 0;
 
         let ticks = 0;
         const shards = [];
