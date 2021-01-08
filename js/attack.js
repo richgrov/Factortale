@@ -81,7 +81,7 @@ class Attack {
         this.tick = 0;
         this.jump = 0;
         this.y = 0;
-      } else if (this.tick <= 33) {
+      } else if (this.tick <= 33 && this.attack !== 'MISS') {
         this.bar--;
       }
     }
