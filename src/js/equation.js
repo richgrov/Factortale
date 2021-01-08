@@ -23,9 +23,9 @@ class Equation {
     this.a = 'x\u00B2';
 
     if (b >= 0) {
-      this.b = '+' + b;
+      this.b = '+' + b + 'x';
     } else {
-      this.b = b;
+      this.b = b + 'x';
     }
 
     if (c >= 0) {
@@ -65,13 +65,13 @@ class Equation {
     }
 
     ctx.textAlign = 'right';
-    ctx.fillText(this.a, this.center(70), this.y);
+    ctx.fillText(this.a, this.center(90), this.y);
 
     ctx.textAlign = 'center';
     ctx.fillText(this.b, this.center(0), this.y);
 
     ctx.textAlign = 'left';
-    ctx.fillText(this.c, this.center(-70), this.y);
+    ctx.fillText(this.c, this.center(-90), this.y);
   }
 
   center(x) {
