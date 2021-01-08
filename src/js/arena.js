@@ -101,6 +101,8 @@ class Particle extends Entity {
 }
 
 class Wall extends Entity {
+  static MAX = 77;
+
   constructor(x, y) {
     super(x, y, 0, 2, 16, () => player.subtractHealth(4));
 
@@ -108,14 +110,14 @@ class Wall extends Entity {
   }
 
   update() {
-    if (this.lifetime <= 80) {
+    if (this.lifetime <= Wall.MAX) {
       super.update();
       this.lifetime++;
     }
   }
 
   render() {
-    if (this.lifetime < 80) {
+    if (this.lifetime < Wall.MAX) {
       const texture = textures.arena.wall;
       ctx.drawImage(texture, this.x - (texture.width / 2) + 320, this.y - (texture.height / 2) + 300);
     }
