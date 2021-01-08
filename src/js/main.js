@@ -48,7 +48,7 @@ let currentFrame = {
     ctx.scale(scale, scale);
   };
 
-  let textureQueue = 21;
+  let textureQueue = 23;
 
   /**
    * Loads a texture.
@@ -117,6 +117,8 @@ let currentFrame = {
         doneSel: loadTexture('done-s.png')
       },
       heart: loadTexture('heart.png'),
+      brake: loadTexture('brake.png'),
+      gameOver: loadTexture('game-over.png'),
       attack: [],
       arena: {
         popper: loadTexture('popper.png'),
