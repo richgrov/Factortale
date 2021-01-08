@@ -1,21 +1,21 @@
 class ButtonManager {
   static Y = 400;
   static HEART_Y = ButtonManager.Y + 14;
-  static selected = 0;
 
-  static buttons = [];
+  selected = 0;
+  buttons = [];
 
-  static confirm() {
-    ButtonManager.buttons.forEach((button) => {
-      if (button.id === ButtonManager.selected) {
+  confirm() {
+    this.buttons.forEach((button) => {
+      if (button.id === this.selected) {
         button.onClick();
       }
     });
   };
 
-  static render(choose) {
-    ButtonManager.buttons.forEach((button) => {
-      if (ButtonManager.selected === button.id && (state === 'CHOOSE' || state === 'MENU')) {
+  render(choose) {
+    this.buttons.forEach((button) => {
+      if (this.selected === button.id && (state === 'CHOOSE' || state === 'MENU')) {
         ctx.drawImage(button.selectedTexture, button.x, ButtonManager.Y);
 
         if (choose) {
@@ -27,10 +27,10 @@ class ButtonManager {
     });
   }
 
-  static makeButton(x, texture, selectedTexture, onClick) {
-    ButtonManager.buttons.push({
+  makeButton(x, texture, selectedTexture, onClick) {
+    this.buttons.push({
       x: x,
-      id: ButtonManager.buttons.length,
+      id: this.buttons.length,
       texture: texture,
       selectedTexture: selectedTexture,
       onClick: onClick

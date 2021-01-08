@@ -1,17 +1,27 @@
 let state;
 let nextState;
-let musicAllowed = true;
+let musicAllowed;
 
-let answerCorrect = false;
-let step = 'FIND_FACTORS';
-let leftFactored = false;
-let rightFactored = false;
+let answerCorrect;
+let step;
+let leftFactored;
+let rightFactored;
 let answer;
 
-const player = new Player();
+let player;
+let buttonManager;
 
 const ready = () => {
   state = 'CHOOSE';
+  musicAllowed = true;
+
+  answerCorrect = false;
+  step = 'FIND_FACTORS';
+  leftFactored = false;
+  rightFactored = false;
+
+  player = new Player();
+  buttonManager = new ButtonManager();
 
   const box = new Box();
   box.setText('Expression blocks the way!');
@@ -52,7 +62,7 @@ const ready = () => {
     });
   });
 
-  ButtonManager.makeButton(20, textures.button.solve, textures.button.solveSel, () => {
+  buttonManager.makeButton(20, textures.button.solve, textures.button.solveSel, () => {
     state = 'MENU';
     currentMenu = solveMenu;
   });
@@ -258,7 +268,7 @@ const ready = () => {
     }
   ]);
 
-  ButtonManager.makeButton(183, textures.button.help, textures.button.helpSel, () => {
+  buttonManager.makeButton(183, textures.button.help, textures.button.helpSel, () => {
     switch (step) {
       case 'FIND_FACTORS':
         box.setText('Find the factors of ' + equation.c + ' which add\nup to equal ' + equation.b);
@@ -311,7 +321,7 @@ const ready = () => {
     }
   ];
 
-  ButtonManager.makeButton(346, textures.button.item, textures.button.itemSel, () => {
+  buttonManager.makeButton(346, textures.button.item, textures.button.itemSel, () => {
     const array = [];
 
     items.forEach((item, i) => {
@@ -338,7 +348,7 @@ const ready = () => {
     state = 'MENU';
   });
 
-  ButtonManager.makeButton(510, textures.button.done, textures.button.doneSel, () => {
+  buttonManager.makeButton(510, textures.button.done, textures.button.doneSel, () => {
     if (step === 'DONE') {
       equation.free = true;
       musicAllowed = false;
@@ -411,7 +421,7 @@ const ready = () => {
           switch (state) {
             case 'CHOOSE':
               sounds.confirm.play();
-              ButtonManager.confirm();
+              buttonManager.confirm();
               break;
 
             case 'MENU':
@@ -437,10 +447,10 @@ const ready = () => {
           switch (state) {
             case 'CHOOSE':
               sounds.cycle.play();
-              if (ButtonManager.selected === 0) {
-                ButtonManager.selected = 3;
+              if (buttonManager.selected === 0) {
+                buttonManager.selected = 3;
               } else {
-                ButtonManager.selected--;
+                buttonManager.selected--;
               }
               break;
 
@@ -454,10 +464,10 @@ const ready = () => {
           switch (state) {
             case 'CHOOSE':
               sounds.cycle.play();
-              if (ButtonManager.selected === 3) {
-                ButtonManager.selected = 0;
+              if (buttonManager.selected === 3) {
+                buttonManager.selected = 0;
               } else {
-                ButtonManager.selected++;
+                buttonManager.selected++;
               }
               break;
 
@@ -500,7 +510,7 @@ const ready = () => {
       const background = textures.background;
       ctx.drawImage(background, (WIDTH / 2) - (background.width / 2), 15);
 
-      ButtonManager.render(state === 'CHOOSE');
+      buttonManager.render(state === 'CHOOSE');
 
       player.render();
 
