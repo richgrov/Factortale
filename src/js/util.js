@@ -32,3 +32,7 @@ const findFactors = (number) => {
 
   return factors;
 };
+
+const formatPlus = (number) => {
+  return number > 0 ? '+' + number : number;
+}
