@@ -444,6 +444,8 @@ const ready = () => {
             if (currentMenu.cancel() === false) {
               state = 'CHOOSE';
             }
+          } else if (state === 'INFO' || state === 'CHOOSE') {
+            box.complete();
           }
           break;
 

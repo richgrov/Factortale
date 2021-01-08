@@ -19,6 +19,12 @@ class Box {
     this.textRender = Array(this.textGoal.length).fill('');
   }
 
+  complete() {
+    this.textGoal.forEach((text, i) => {
+      this.textRender[i] = this.textGoal[i];
+    });
+  }
+
   grow(callback) {
     this.goalWidth = 600;
     this.callback = callback;

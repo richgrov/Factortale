@@ -67,6 +67,8 @@ class Player {
                 sounds.music.gameOver.currentTime = 0;
                 ready();
               }
+            } else if (action === Action.CANCEL) {
+              renderText = text[currentText];
             }
           },
           tick: () => {
