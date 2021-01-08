@@ -348,9 +348,16 @@ const ready = () => {
         end();
       }
     } else {
-      currentMenu = new Menu([]);
-      answerCorrect = false;
-      attack.run();
+      state = 'INFO';
+      box.setText('The expression is not completed\nyet!')
+      nextState = () => {
+        state = 'BATTLE';
+
+        box.shrink(() => {
+          answerCorrect = false;
+          arena.sendAttack();
+        });
+      };
     }
   });
 
