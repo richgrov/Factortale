@@ -6,8 +6,8 @@ class Equation {
     // Get factors of c
     const factors = findFactors(c);
 
-    // Pick a random pair of factors and make b
-    let index = random(factors.length);
+    // Pick a random pair of factors (excluding the first and last) and make b
+    let index = random(factors.length - 2) + 1;
     const b = factors[index] + factors[factors.length - index - 1];
 
     return new Equation(b, c);
