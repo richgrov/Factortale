@@ -124,5 +124,9 @@ class Menu {
       const isEven = i % 2 === 0;
       ctx.fillText(text, isEven ? 70 : 350, i < 2 ? 250 : 280);
     }
+
+    if (this.pageCount > 1) {
+      ctx.fillText('PAGE ' + (this.page + 1), 380, 320);
+    }
   }
 }
