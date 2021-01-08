@@ -1,8 +1,4 @@
-class BattleState {
-  constructor(id, callback) {
-    this.callback = callback;
-  }
-}
+let state;
 
 let answerCorrect = false;
 let step = 'FIND_FACTORS';
@@ -13,6 +9,8 @@ let answer;
 const player = new Player();
 
 const ready = () => {
+  state = 'CHOOSE';
+
   const box = new Box();
   box.setText('Expression blocks the way!');
 
@@ -41,40 +39,19 @@ const ready = () => {
       } else {
         box.setText('Expression remains the same.');
       }
-      state = BattleState.CHOOSE;
+      state = 'CHOOSE';
     });
   });
 
   const attack = new Attack(equation, () => {
-    state = BattleState.BATTLE;
+    state = 'BATTLE';
     box.shrink(() => {
       arena.sendAttack();
     });
   });
 
-  // When text is shown to the user
-  BattleState.INFO = new BattleState(0);
-
-  // When only one page of text is shown to the user, who can use the bottom buttons
-  BattleState.CHOOSE = new BattleState(1);
-
-  // When the user has chosen a button and is in the menu
-  BattleState.MENU = new BattleState(2);
-
-  // When the attack and damage animation is being played
-  BattleState.ATTACK = new BattleState(3);
-
-  // When the player can move around the arena
-  BattleState.BATTLE = new BattleState(4);
-
-  let state = BattleState.CHOOSE;
-
-  BattleState.get = () => {
-    return state;
-  };
-
   ButtonManager.makeButton(20, textures.button.solve, textures.button.solveSel, () => {
-    state = BattleState.MENU;
+    state = 'MENU';
     currentMenu = solveMenu;
   });
 
@@ -96,7 +73,7 @@ const ready = () => {
       {
         name: 'Factor out ' + equation.correctFactors[0],
         callback: () => {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -104,7 +81,7 @@ const ready = () => {
       {
         name: 'Factor out x\u00B2',
         callback: () => {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -112,7 +89,7 @@ const ready = () => {
       {
         name: 'Factor out ' + -equation.correctFactors[0],
         callback: () => {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -140,7 +117,7 @@ const ready = () => {
       {
         name: 'Factor out x',
         callback: () => {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -148,7 +125,7 @@ const ready = () => {
       {
         name: 'Factor out ' + -equation.correctFactors[1],
         callback: () => {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -156,7 +133,7 @@ const ready = () => {
       {
         name: 'Factor out ' + equation.originalC,
         callback: () => {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -171,7 +148,7 @@ const ready = () => {
       name: 'Left',
       callback: () => {
         if (leftFactored) {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         } else {
@@ -183,7 +160,7 @@ const ready = () => {
       name: 'Right',
       callback: () => {
         if (rightFactored) {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         } else {
@@ -214,7 +191,7 @@ const ready = () => {
       {
         name: '(x' + -secondFactor + ')(x' + firstFactor + ')',
         callback: () => {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -222,7 +199,7 @@ const ready = () => {
       {
         name: '(x' + secondFactor + ')(x' + -firstFactor + ')',
         callback: () => {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -230,7 +207,7 @@ const ready = () => {
       {
         name: '(x' + -secondFactor + ')(x' + -firstFactor + ')',
         callback: () => {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -247,7 +224,7 @@ const ready = () => {
         if (step === 'FIND_FACTORS') {
           currentMenu = findFactorMenu;
         } else {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -259,7 +236,7 @@ const ready = () => {
         if (step === 'FACTOR') {
           currentMenu = factorChooseMenu;
         } else {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -271,7 +248,7 @@ const ready = () => {
         if (step === 'FINAL') {
           currentMenu = finalGroupsMenu();
         } else {
-          state = BattleState.ATTACK;
+          state = 'ATTACK';
           answerCorrect = false;
           attack.run();
         }
@@ -306,13 +283,13 @@ const ready = () => {
   ButtonManager.makeButton(510, textures.button.done, textures.button.doneSel, () => {
     if (step === 'DONE') {
       equation.free = true;
-      state = BattleState.INFO;
+      state = 'INFO';
       sounds.music.pause();
       sounds.spare.play();
       box.setText('YOU WON!\n* You earned 0 XP and ' + random(10) + ' gold.');
     } else {
       currentMenu = new Menu([]);
-      state = BattleState.ATTACK;
+      state = 'ATTACK';
       answerCorrect = false;
       attack.run();
     }
@@ -349,7 +326,7 @@ const ready = () => {
     factorMenuItems.push({
       name: factor + ' & ' + secondFactor,
       callback: () => {
-        state = BattleState.ATTACK;
+        state = 'ATTACK';
         attackCallback();
       }
     });
@@ -373,12 +350,12 @@ const ready = () => {
       switch (action) {
         case Action.CONFIRM:
           switch (state) {
-            case BattleState.CHOOSE:
+            case 'CHOOSE':
               sounds.confirm.play();
               ButtonManager.confirm();
               break;
 
-            case BattleState.MENU:
+            case 'MENU':
               sounds.confirm.play();
               currentMenu.confirm();
               break;
@@ -386,16 +363,16 @@ const ready = () => {
           break;
 
         case Action.CANCEL:
-          if (state === BattleState.MENU) {
+          if (state === 'MENU') {
             if (currentMenu.cancel() === false) {
-              state = BattleState.CHOOSE;
+              state = 'CHOOSE';
             }
           }
           break;
 
         case Action.LEFT:
           switch (state) {
-            case BattleState.CHOOSE:
+            case 'CHOOSE':
               sounds.cycle.play();
               if (ButtonManager.selected === 0) {
                 ButtonManager.selected = 3;
@@ -404,7 +381,7 @@ const ready = () => {
               }
               break;
 
-            case BattleState.MENU:
+            case 'MENU':
               currentMenu.left();
               break;
           }
@@ -412,7 +389,7 @@ const ready = () => {
 
         case Action.RIGHT:
           switch (state) {
-            case BattleState.CHOOSE:
+            case 'CHOOSE':
               sounds.cycle.play();
               if (ButtonManager.selected === 3) {
                 ButtonManager.selected = 0;
@@ -421,7 +398,7 @@ const ready = () => {
               }
               break;
 
-            case BattleState.MENU:
+            case 'MENU':
               currentMenu.right();
               break;
           }
@@ -429,7 +406,7 @@ const ready = () => {
 
         case Action.UP:
           switch (state) {
-            case BattleState.MENU:
+            case 'MENU':
               currentMenu.up();
               break;
           }
@@ -437,7 +414,7 @@ const ready = () => {
 
         case Action.DOWN:
           switch (state) {
-            case BattleState.MENU:
+            case 'MENU':
               currentMenu.down();
               break;
           }
@@ -446,7 +423,7 @@ const ready = () => {
     },
     tick: () => {
       switch (state) {
-        case BattleState.BATTLE:
+        case 'BATTLE':
           arena.update();
           player.update();
           break;
@@ -460,7 +437,7 @@ const ready = () => {
       const background = textures.background;
       ctx.drawImage(background, (WIDTH / 2) - (background.width / 2), 15);
 
-      ButtonManager.render(state === BattleState.CHOOSE);
+      ButtonManager.render(state === 'CHOOSE');
 
       player.render();
 
@@ -472,12 +449,12 @@ const ready = () => {
       attack.render();
 
       switch (state) {
-        case BattleState.MENU:
-        case BattleState.ATTACK:
+        case 'MENU':
+        case 'ATTACK':
           currentMenu.render();
           break;
 
-        case BattleState.BATTLE:
+        case 'BATTLE':
           arena.render();
           break;
       }

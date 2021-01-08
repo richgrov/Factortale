@@ -48,7 +48,7 @@ class Box {
     }
 
     // Typewriter
-    if (BattleState.get() === BattleState.INFO || BattleState.get() === BattleState.CHOOSE) {
+    if (state === 'INFO' || state === 'CHOOSE') {
       for (let i = 0; i < this.textGoal.length; i++) {
         const text = this.textGoal[i];
         if (text.length - this.textRender[i].length > 0) {
@@ -68,7 +68,7 @@ class Box {
   }
 
   render() {
-    if (BattleState.get() === BattleState.INFO || BattleState.get() === BattleState.CHOOSE) {
+    if (state === 'INFO' || state === 'CHOOSE') {
       ctx.textAlign = 'left';
       ctx.font = '30px Determination Mono';
 

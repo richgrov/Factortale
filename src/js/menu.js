@@ -114,7 +114,7 @@ class Menu {
     ctx.font = '30px Determination Mono';
 
     // Draw the heart
-    if (BattleState.get() !== BattleState.ATTACK) {
+    if (state !== 'ATTACK') {
       ctx.drawImage(textures.heart, this.selection % 2 === 0 ? 40 : 320, this.selection < 2 ? 257 : 287);
     }
 

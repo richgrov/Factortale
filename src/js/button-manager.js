@@ -15,7 +15,7 @@ class ButtonManager {
 
   static render(choose) {
     ButtonManager.buttons.forEach((button) => {
-      if (ButtonManager.selected === button.id && (BattleState.get() === BattleState.CHOOSE || BattleState.get() === BattleState.MENU)) {
+      if (ButtonManager.selected === button.id && (state === 'CHOOSE' || state === 'MENU')) {
         ctx.drawImage(button.selectedTexture, button.x, ButtonManager.Y);
 
         if (choose) {
