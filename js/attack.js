@@ -37,7 +37,7 @@ class Attack {
         if (this.frames <= 5) {
           this.frames += 0.25;
         } else {
-          if (this.attack !== 'MISS') {
+          if (answerCorrect) {
             if (step === 'FACTOR') {
               if (leftFactored) {
                 this.factorA();
@@ -81,7 +81,7 @@ class Attack {
         this.tick = 0;
         this.jump = 0;
         this.y = 0;
-      } else if (this.tick <= 33 && this.attack !== 'MISS') {
+      } else if (this.tick <= 33 && answerCorrect) {
         this.bar--;
       }
     }
@@ -100,14 +100,14 @@ class Attack {
       }
     } else {
       ctx.font = '30px Hachicro';
-      if (this.attack === 'MISS') {
-        ctx.fillStyle = 'white';
-      } else {
+      if (answerCorrect) {
         ctx.fillStyle = '#ff1800';
+      } else {
+        ctx.fillStyle = 'white';
       }
       ctx.fillText(this.attack, (WIDTH / 2) - 30, 30 - this.y);
 
-      if (this.attack !== 'MISS') {
+      if (answerCorrect) {
         ctx.strokeStyle = 'black';
         ctx.strokeWidth = 0.5;
         ctx.strokeRect(centerWidth(Attack.BAR_WIDTH + 2), 79, Attack.BAR_WIDTH + 2, 12);
