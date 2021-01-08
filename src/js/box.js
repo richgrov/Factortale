@@ -67,7 +67,7 @@ class Box {
       this.textRender = Array(this.textGoal.length).fill('');
     }
 
-    if (!this.done) {
+    if (!this.done && this.renderWidth === this.goalWidth) {
       this.done = true;
       this.callback();
     }

@@ -34,6 +34,8 @@ const ready = () => {
     findFactorMenu.selection = 0;
     factorChooseMenu.selection = 0;
 
+    state = 'CHOOSE';
+    
     box.grow(() => {
       if (step === 'FACTOR') {
         if (leftFactored) {
@@ -53,7 +55,6 @@ const ready = () => {
       } else {
         box.setText('Expression remains the same.');
       }
-      state = 'CHOOSE';
     });
   });
 
