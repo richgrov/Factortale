@@ -21,8 +21,8 @@ class Player {
 
       if (this.health === 0) {
         musicAllowed = false;
-        sounds.music.pause();
-        sounds.music.currentTime = 0;
+        sounds.music.main.pause();
+        sounds.music.main.currentTime = 0;
         clearInterval(musicInterval);
 
         let ticks = 0;
@@ -37,6 +37,21 @@ class Player {
           'You prob just died on purpose...'
         ];
 
+        let interval;
+        let musicStarted = false;
+
+        const playMusic = () => {
+          musicStarted = true;
+
+          sounds.music.gameOver.play();
+
+          interval = setInterval(() => {
+            sounds.music.gameOver.pause();
+            sounds.music.gameOver.currentTime = 0;
+            sounds.music.gameOver.play();
+          }, 50000);
+        };
+
         const TIME_TEXT = 230;
 
         currentFrame = {
@@ -45,6 +60,9 @@ class Player {
               renderText = '';
               currentText++;
               if (currentText === text.length) {
+                clearInterval(interval);
+                sounds.music.gameOver.pause();
+                sounds.music.gameOver.currentTime = 0;
                 ready();
               }
             }
@@ -72,6 +90,10 @@ class Player {
               });
             } else {
               alpha += 0.07;
+
+              if (!musicStarted) {
+                playMusic();
+              }
 
               if (ticks > TIME_TEXT && renderText.length !== text[currentText].length) {
                 if (typeDelay === 0) {

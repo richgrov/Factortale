@@ -134,7 +134,10 @@ let currentFrame = {
     }
 
     sounds = {
-      music: loadAudio('music.mp3'),
+      music: {
+        main: loadAudio('music-main.mp3'),
+        gameOver: loadAudio('music-gameover.mp3')
+      },
       type: {
         menu: loadAudio('type-menu.wav', 0.5),
         gameOver: loadAudio('type-gameover.wav')
