@@ -6,37 +6,16 @@ let sounds = {};
 
 let ctx;
 
-let isReady = false;
-let loop;
-
 let currentFrame = {
+  action: () => {},
   tick: () => {},
-  action: (action) => {
-    if (action === Action.CONFIRM) {
-      if (isReady) {
-        ready();
-      }
-    }
-  },
   render: () => {
     ctx.fillStyle = 'white';
     ctx.font = '30px Determination Mono';
     ctx.textAlign = 'center';
 
-    if (isReady) {
-      ctx.fillText('Press confirm to begin game', WIDTH / 2, 300);
-
-      ctx.fillStyle = 'gray';
-      ctx.textAlign = 'left';
-      ctx.fillText('--- Instruction --', 150, 100);
-      ctx.fillText('[Z or ENTER] - Confirm', 150, 130);
-      ctx.fillText('[X or SHIFT] - Cancel', 150, 160);
-      ctx.fillText('[ARROW KEYS] - Move', 150, 190);
-      ctx.fillText('When HP is 0, you lose.', 150, 220);
-    } else {
-      // Show simple loading text until assets are ready.
-      ctx.fillText('Loading...', WIDTH / 2, HEIGHT / 2);
-    }
+    // Show simple loading text until assets are ready.
+    ctx.fillText('Loading...', WIDTH / 2, HEIGHT / 2);
   }
 };
 
@@ -83,7 +62,7 @@ let currentFrame = {
     image.onload = () => {
       textureQueue--;
       if (textureQueue === 0) {
-        isReady = true;
+        start();
       }
     };
 
@@ -156,6 +135,7 @@ let currentFrame = {
 
     sounds = {
       music: {
+        start: loadAudio('music-start.mp3'),
         main: loadAudio('music-main.mp3'),
         gameOver: loadAudio('music-gameover.mp3')
       },
@@ -181,7 +161,7 @@ let currentFrame = {
 
   let time = Date.now();
   let elapsed = 0;
-  loop = () => {
+  const loop = () => {
     let delta = Date.now() - time;
     time = Date.now();
 
